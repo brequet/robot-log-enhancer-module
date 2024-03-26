@@ -7,7 +7,10 @@ function initializeRobotFooter() {
   let footer = document.createElement("robot-footer");
 
   const body = document.querySelector("body");
-  body?.appendChild(footer);
+  if (body) {
+    body.appendChild(footer);
+    body.style.marginBottom = "100%";
+  }
 }
 
 initializeRobotFooter();
