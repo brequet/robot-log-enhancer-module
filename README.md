@@ -21,5 +21,5 @@ To use Robot Log Enhancer in your project, simply include the following script t
 To build the module yourself, follow these steps:
 
 1. Clone the repository.
-2. Run `npm install` to install dependencies.
-3. Use the command `npm run build` to compile the project. The output will be `dist/robot-log-enhancer.umd.js`.
+2. Run `pnpm install` to install dependencies.
+3. Use the command `pnpm run build` to compile the project. The output will be `dist/robot-log-enhancer.umd.js`.

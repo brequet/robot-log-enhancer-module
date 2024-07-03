@@ -1,4 +1,4 @@
-<svelte:options tag="robot-footer" />
+<svelte:options customElement="robot-footer" />
 
 <script lang="ts">
   import { onMount } from "svelte";
@@ -9,11 +9,14 @@
     { name: "Collapse all but last children", func: collapseRetryKeywords },
   ];
 
-  let currentTestId = "";
-  $: currentTestName = getTestNameFromTestId(currentTestId);
-  $: currentTestHumanIndex = getTestIndexFromTestId(currentTestId) + 1;
+  let currentTestId = $state("");
 
-  let totalFailedTestCount: number | undefined = undefined;
+  const currentTestName = $derived(getTestNameFromTestId(currentTestId));
+  const currentTestHumanIndex = $derived(
+    getTestIndexFromTestId(currentTestId) + 1
+  );
+
+  let totalFailedTestCount: number | undefined = $state(undefined);
 
   onMount(() => {
     const handleScroll = () => {
