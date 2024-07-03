@@ -7,6 +7,10 @@
 
   const buttons: { name: String; func: () => void }[] = [
     { name: "Collapse all but last children", func: collapseRetryKeywords },
+    {
+      name: "Get all failing tests as robot test params",
+      func: openPopupWithFailedTestsAsRobotParams,
+    },
   ];
 
   let currentTestId = $state("");
@@ -124,6 +128,21 @@
       behavior: "smooth",
     });
   }
+
+  function openPopupWithFailedTestsAsRobotParams() {
+    const visibleFailedTests = getFailedTestsElement();
+    const failedTestsAsRobotParams = visibleFailedTests
+      .map(
+        (e) =>
+          e.querySelector(".element-header-left > .name")?.textContent ?? ""
+      )
+      .map((e) => `--test "${e}"`)
+      .join(" ");
+    // open popup with failed tests as robot params string
+    alert(
+      `${visibleFailedTests.length} failed tests:\n${failedTestsAsRobotParams}`
+    );
+  }
 </script>
 
 <footer class="footer">
@@ -164,7 +183,7 @@
 
   .button-group {
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     gap: 0.5rem;
   }
 
