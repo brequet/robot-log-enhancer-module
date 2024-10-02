@@ -1,17 +1,12 @@
 <svelte:options customElement="robot-footer" />
 
 <script lang="ts">
+  import Tailwind from "./tailwind.svelte";
   import { onMount } from "svelte";
   import { collapseRetryKeywords } from "./robot";
-  import Button from "./components/Button.svelte";
-
-  const buttons: { name: String; func: () => void }[] = [
-    { name: "Collapse all but last children", func: collapseRetryKeywords },
-    {
-      name: "Get all failing tests as robot test params",
-      func: openPopupWithFailedTestsAsRobotParams,
-    },
-  ];
+  import { Button, buttonVariants } from "$lib/components/ui/button/index.js";
+  import * as Dialog from "$lib/components/ui/dialog";
+  import { Clipboard } from "lucide-svelte";
 
   let currentTestId = $state("");
 
@@ -22,10 +17,22 @@
 
   let totalFailedTestCount: number | undefined = $state(undefined);
 
+  let failingTestsAsRobotParams = $derived.by(() => {
+    if (!totalFailedTestCount) return "";
+    return getFailedTestsElement()
+      .map(
+        (e) =>
+          e.querySelector(".element-header-left > .name")?.textContent ?? ""
+      )
+      .map((e) => `--test "${e}"`)
+      .join(" ")
+      .trim();
+  });
+
   onMount(() => {
     const handleScroll = () => {
       const scrollPosition = window.scrollY;
-      const divs = getFailedTestsElement();
+      const divs = getFailedTestsElement() as HTMLDivElement[];
 
       for (let i = 0; i < divs.length; i++) {
         const div = divs[i];
@@ -53,7 +60,7 @@
       totalFailedTestCount = getFailedTestsElement().length;
     };
 
-    const observer = new MutationObserver((mutations, observer) => {
+    const observer = new MutationObserver(() => {
       handleDomChanges();
     });
 
@@ -77,19 +84,19 @@
     );
   }
 
-  function getFailedTestsElement(): Element[] {
-    return [...document.getElementsByClassName("test")].filter(
-      (e) =>
-        e.querySelector(".element-header-left")?.title.includes("FAIL") ?? false
-    );
+  function getFailedTestsElement(): HTMLElement[] {
+    return [...document.getElementsByClassName("test")].filter((e) => {
+      const htmlElement: HTMLElement = e as HTMLElement;
+      const headerLeft = htmlElement.querySelector(
+        ".element-header-left"
+      ) as HTMLElement;
+      return headerLeft?.title.includes("FAIL") ?? false;
+    }) as HTMLElement[];
   }
 
   function getTestIndexFromTestId(testId: string): number {
     const visibleFailedTests = getFailedTestsElement();
-    const currentTestIndex = visibleFailedTests.findIndex(
-      (e) => e.id === testId
-    );
-    return currentTestIndex;
+    return visibleFailedTests.findIndex((e) => e.id === testId);
   }
 
   function goToPreviousTest() {
@@ -128,28 +135,39 @@
       behavior: "smooth",
     });
   }
-
-  function openPopupWithFailedTestsAsRobotParams() {
-    const visibleFailedTests = getFailedTestsElement();
-    const failedTestsAsRobotParams = visibleFailedTests
-      .map(
-        (e) =>
-          e.querySelector(".element-header-left > .name")?.textContent ?? ""
-      )
-      .map((e) => `--test "${e}"`)
-      .join(" ");
-    // open popup with failed tests as robot params string
-    alert(
-      `${visibleFailedTests.length} failed tests:\n${failedTestsAsRobotParams}`
-    );
-  }
 </script>
 
-<footer class="footer">
+<Tailwind />
+
+<footer class="footer bg-slate-100">
   <div class="button-group">
-    {#each buttons as button}
-      <Button on:click={button.func}>{button.name}</Button>
-    {/each}
+    <Button on:click={collapseRetryKeywords}>
+      Collapse all but last children
+    </Button>
+
+    <Dialog.Root>
+      <Dialog.Trigger class={buttonVariants({ variant: "default" })}>
+        Print all failing tests as robot test params in console
+      </Dialog.Trigger>
+      <Dialog.Content class="max-w-3xl">
+        <Dialog.Header>
+          <Dialog.Title>Failing tests as Robot params</Dialog.Title>
+          <Dialog.Description>
+            You can copy and use these params to relaunch only failing tests.
+          </Dialog.Description>
+        </Dialog.Header>
+        <div
+          class="bg-muted text-muted-foreground p-4 pt-1 rounded-lg flex flex-col items-end"
+        >
+          <!--  TODO implement button + move into compoennet all this -->
+          <Button disabled variant="outline" size="icon">
+            <Clipboard />
+          </Button>
+          <pre
+            class="whitespace-pre-wrap break-all font-mono">{failingTestsAsRobotParams}</pre>
+        </div>
+      </Dialog.Content>
+    </Dialog.Root>
   </div>
 
   <div class="footer-content">
@@ -173,7 +191,7 @@
     right: 0;
     bottom: 0;
     width: 100%;
-    background-color: #f8f9fa;
+    /* background-color: #f8f9fa; */
     padding: 0.5rem;
     border-top: 1px solid #dee2e6;
     display: flex;

@@ -22,13 +22,13 @@ export function toggleChildrenToShowOnlyLastChild(elementId: string) {
   // close all
   keywordChildren.forEach((keywordChild) => {
     if (!isKeywordClosed(keywordChild)) {
-      toggleKeyword(keywordChild.id);
+      toggleKeyword(keywordChild.id); // globally defined in robot log.html files
     }
   });
 
   // expand last
   if (isKeywordClosed(lastElement)) {
-    toggleKeyword(lastElement.id);
+    toggleKeyword(lastElement.id); // globally defined in robot log.html files
   }
 }
 

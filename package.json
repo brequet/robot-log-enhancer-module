@@ -10,12 +10,25 @@
     "check": "svelte-check --tsconfig ./tsconfig.json"
   },
   "devDependencies": {
-    "@sveltejs/vite-plugin-svelte": "^3.1.0",
-    "@tsconfig/svelte": "^5.0.2",
-    "svelte": "5.0.0-next.172",
-    "svelte-check": "^3.6.7",
-    "tslib": "^2.6.2",
-    "typescript": "^5.2.2",
-    "vite": "^5.2.0"
+    "@sveltejs/vite-plugin-svelte": "^4.0.0-next.7",
+    "@tsconfig/svelte": "^5.0.4",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.47",
+    "svelte": "^5.0.0-next.257",
+    "svelte-check": "^4.0.2",
+    "tslib": "^2.7.0",
+    "typescript": "^5.6.2",
+    "vite": "^5.4.6"
+  },
+  "packageManager": "yarn@1.22.21+sha1.1959a18351b811cdeedbd484a8f86c3cc3bbaf72",
+  "dependencies": {
+    "bits-ui": "^0.21.15",
+    "clsx": "^2.1.1",
+    "lucide-svelte": "^0.447.0",
+    "svelte-add": "^2.7.3",
+    "svelte-preprocess": "^6.0.3",
+    "tailwind-merge": "^2.5.2",
+    "tailwind-variants": "^0.2.1",
+    "tailwindcss": "^3.4.13"
   }
 }
