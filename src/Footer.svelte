@@ -6,7 +6,7 @@
   import { collapseRetryKeywords } from "./robot";
   import { Button, buttonVariants } from "$lib/components/ui/button/index.js";
   import * as Dialog from "$lib/components/ui/dialog";
-  import { Clipboard } from "lucide-svelte";
+  import { Clipboard, ClipboardCheck } from "lucide-svelte";
 
   let currentTestId = $state("");
 
@@ -135,6 +135,16 @@
       behavior: "smooth",
     });
   }
+
+  let copied = $state(false)
+  function copyToClipboard() {
+    console.log("copying to clipboard");
+    navigator.clipboard.writeText(failingTestsAsRobotParams);
+    copied = true;
+    setTimeout(() => {
+      copied = false;
+    }, 2000);
+  }
 </script>
 
 <Tailwind />
@@ -160,8 +170,12 @@
           class="bg-muted text-muted-foreground p-4 pt-1 rounded-lg flex flex-col items-end"
         >
           <!--  TODO implement button + move into compoennet all this -->
-          <Button disabled variant="outline" size="icon">
-            <Clipboard />
+          <Button onclick={copyToClipboard}  variant="outline" size="icon">
+            {#if copied}
+              <ClipboardCheck onclick={copyToClipboard} class="h-4 w-4"/>
+            {:else}
+              <Clipboard onclick={copyToClipboard} class="h-4 w-4"/>
+            {/if}
           </Button>
           <pre
             class="whitespace-pre-wrap break-all font-mono">{failingTestsAsRobotParams}</pre>
