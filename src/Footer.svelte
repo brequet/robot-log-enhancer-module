@@ -3,19 +3,24 @@
 <script lang="ts">
   import Tailwind from "./tailwind.svelte";
   import { onMount } from "svelte";
-  import { collapseRetryKeywords } from "./robot";
   import { Button, buttonVariants } from "$lib/components/ui/button/index.js";
   import * as Dialog from "$lib/components/ui/dialog";
-  import { Clipboard, ClipboardCheck } from "lucide-svelte";
+  import { goToPreviousTest, goToNextTest } from "$lib/robot/navigation";
+  import {
+    getTestNameFromTestId,
+    getFailedTestsElement,
+    getTestIndexFromTestId,
+    collapseRetryKeywords,
+  } from "$lib/robot/utils";
+  import CopyToClipboardButton from "$lib/components/custom/CopyToClipboardButton.svelte";
 
   let currentTestId = $state("");
+  let totalFailedTestCount: number | undefined = $state(undefined);
 
   const currentTestName = $derived(getTestNameFromTestId(currentTestId));
   const currentTestHumanIndex = $derived(
     getTestIndexFromTestId(currentTestId) + 1
   );
-
-  let totalFailedTestCount: number | undefined = $state(undefined);
 
   let failingTestsAsRobotParams = $derived.by(() => {
     if (!totalFailedTestCount) return "";
@@ -43,18 +48,16 @@
           currentTestId = "";
         } else if (
           scrollPosition >= divTop &&
-          scrollPosition < divTop + divHeight
+          scrollPosition < divTop + divHeight &&
+          currentTestId !== div.id
         ) {
-          if (currentTestId !== div.id) {
-            currentTestId = div.id;
-          }
+          currentTestId = div.id;
         }
       }
     };
 
     window.addEventListener("scroll", handleScroll);
 
-    totalFailedTestCount = getFailedTestsElement().length;
     const handleDomChanges = () => {
       handleScroll();
       totalFailedTestCount = getFailedTestsElement().length;
@@ -73,84 +76,17 @@
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
+      observer.disconnect();
     };
   });
-
-  function getTestNameFromTestId(testId: string): string {
-    return (
-      document
-        .getElementById(testId)
-        ?.querySelector(".element-header-left > .name")?.textContent ?? ""
-    );
-  }
-
-  function getFailedTestsElement(): HTMLElement[] {
-    return [...document.getElementsByClassName("test")].filter((e) => {
-      const htmlElement: HTMLElement = e as HTMLElement;
-      const headerLeft = htmlElement.querySelector(
-        ".element-header-left"
-      ) as HTMLElement;
-      return headerLeft?.title.includes("FAIL") ?? false;
-    }) as HTMLElement[];
-  }
-
-  function getTestIndexFromTestId(testId: string): number {
-    const visibleFailedTests = getFailedTestsElement();
-    return visibleFailedTests.findIndex((e) => e.id === testId);
-  }
-
-  function goToPreviousTest() {
-    const visibleFailedTests = getFailedTestsElement();
-    const currentTestIndex = visibleFailedTests.findIndex(
-      (e) => e.id === currentTestId
-    );
-
-    let previousIndex: number;
-    if (currentTestIndex < 0) {
-      return;
-    } else if (currentTestIndex === 0) {
-      previousIndex = 0;
-    } else {
-      previousIndex = currentTestIndex - 1;
-    }
-
-    const previousElement = visibleFailedTests[previousIndex];
-    window.scrollTo({
-      top: previousElement.offsetTop,
-      behavior: "smooth",
-    });
-  }
-
-  function goToNextTest() {
-    const visibleFailedTests = getFailedTestsElement();
-    const currentTestIndex = visibleFailedTests.findIndex(
-      (e) => e.id === currentTestId
-    );
-
-    if (currentTestIndex === visibleFailedTests.length - 1) return;
-
-    const element = visibleFailedTests[currentTestIndex + 1];
-    window.scrollTo({
-      top: element.offsetTop + 1, // hack so the current test is effectively changed
-      behavior: "smooth",
-    });
-  }
-
-  let copied = $state(false)
-  function copyToClipboard() {
-    console.log("copying to clipboard");
-    navigator.clipboard.writeText(failingTestsAsRobotParams);
-    copied = true;
-    setTimeout(() => {
-      copied = false;
-    }, 2000);
-  }
 </script>
 
 <Tailwind />
 
-<footer class="footer bg-slate-100">
-  <div class="button-group">
+<footer
+  class="fixed left-0 right-0 bottom-0 w-full bg-slate-100 p-2 border-t border-gray-300 flex flex-row z-10"
+>
+  <div class="flex flex-nowrap gap-2">
     <Button on:click={collapseRetryKeywords}>
       Collapse all but last children
     </Button>
@@ -169,14 +105,7 @@
         <div
           class="bg-muted text-muted-foreground p-4 pt-1 rounded-lg flex flex-col items-end"
         >
-          <!--  TODO implement button + move into compoennet all this -->
-          <Button onclick={copyToClipboard}  variant="outline" size="icon">
-            {#if copied}
-              <ClipboardCheck onclick={copyToClipboard} class="h-4 w-4"/>
-            {:else}
-              <Clipboard onclick={copyToClipboard} class="h-4 w-4"/>
-            {/if}
-          </Button>
+          <CopyToClipboardButton text={failingTestsAsRobotParams} />
           <pre
             class="whitespace-pre-wrap break-all font-mono">{failingTestsAsRobotParams}</pre>
         </div>
@@ -184,64 +113,18 @@
     </Dialog.Root>
   </div>
 
-  <div class="footer-content">
-    <span class="test-name">
+  <div class="flex items-center justify-between w-full mr-6">
+    <span
+      class="whitespace-nowrap overflow-hidden text-ellipsis flex-grow text-left pl-4"
+    >
       {currentTestName}
-      <span class="test-count">
+      <span class="font-bold">
         ({currentTestHumanIndex} / {totalFailedTestCount})
       </span>
     </span>
-    <div class="footer-actions">
-      <Button on:click={goToPreviousTest}>Previous</Button>
-      <Button on:click={goToNextTest}>Next</Button>
+    <div class="flex gap-2">
+      <Button on:click={() => goToPreviousTest(currentTestId)}>Previous</Button>
+      <Button on:click={() => goToNextTest(currentTestId)}>Next</Button>
     </div>
   </div>
 </footer>
-
-<style>
-  .footer {
-    position: fixed;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    width: 100%;
-    /* background-color: #f8f9fa; */
-    padding: 0.5rem;
-    border-top: 1px solid #dee2e6;
-    display: flex;
-    flex-direction: row;
-    z-index: 1;
-  }
-
-  .button-group {
-    display: flex;
-    flex-wrap: nowrap;
-    gap: 0.5rem;
-  }
-
-  .footer-content {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    margin-right: 1.5rem;
-  }
-
-  .test-name {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    flex-grow: 1;
-    text-align: left;
-    padding-left: 1rem;
-  }
-
-  .test-count {
-    font-weight: bold;
-  }
-
-  .footer-actions {
-    display: flex;
-    gap: 0.5rem;
-  }
-</style>

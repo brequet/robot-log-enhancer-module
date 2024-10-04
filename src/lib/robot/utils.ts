@@ -1,7 +1,3 @@
-/*
-  CUSTOM FUNC
-*/
-
 export function isKeywordClosed(keywordElement: Element) {
   return keywordElement
     .querySelector(":scope > .element-header")
@@ -90,4 +86,27 @@ export function collapseRetryKeywords() {
 
     toggleChildrenToShowOnlyLastChild(el.id);
   });
+}
+
+export function getTestNameFromTestId(testId: string): string {
+  return (
+    document
+      .getElementById(testId)
+      ?.querySelector(".element-header-left > .name")?.textContent ?? ""
+  );
+}
+
+export function getFailedTestsElement(): HTMLElement[] {
+  return [...document.getElementsByClassName("test")].filter((e) => {
+    const htmlElement = e as HTMLElement;
+    const headerLeft = htmlElement.querySelector(
+      ".element-header-left"
+    ) as HTMLElement;
+    return headerLeft?.title.includes("FAIL") ?? false;
+  }) as HTMLElement[];
+}
+
+export function getTestIndexFromTestId(testId: string): number {
+  const visibleFailedTests = getFailedTestsElement();
+  return visibleFailedTests.findIndex((e) => e.id === testId);
 }
