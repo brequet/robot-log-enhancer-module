@@ -32,10 +32,6 @@
     totalFailedTestCount && currentTestIndex < totalFailedTestCount - 1,
   );
 
-  $effect(() => {
-    if (isPageLoaded) collapseRetryKeywords();
-  });
-
   let failingTestsAsRobotParams = $derived.by(() => {
     return failedTests
       .map((e: RobotTest) => `--test "${e.name}"`)
@@ -43,10 +39,15 @@
       .trim();
   });
 
+  $effect(() => {
+    if (isPageLoaded) collapseRetryKeywords();
+  });
+
   onMount(() => {
-    const updateCurrentTestIdFromPosition = () => {
+    const updateFailedTestsAndCurrentTestId = () => {
       const scrollPosition = window.scrollY;
       const divs = getFailedTestsElementFromPage() as HTMLDivElement[];
+
       failedTests = divs.map((testElement: HTMLElement) => {
         const id = testElement.id;
         const title =
@@ -75,10 +76,10 @@
       }
     };
 
-    window.addEventListener("scroll", updateCurrentTestIdFromPosition);
+    window.addEventListener("scroll", updateFailedTestsAndCurrentTestId);
 
     const handleDomChanges = () => {
-      updateCurrentTestIdFromPosition();
+      updateFailedTestsAndCurrentTestId();
       totalFailedTestCount = getNumberOfFailedTestsFromPage();
     };
 
@@ -94,7 +95,7 @@
     });
 
     return () => {
-      window.removeEventListener("scroll", updateCurrentTestIdFromPosition);
+      window.removeEventListener("scroll", updateFailedTestsAndCurrentTestId);
       observer.disconnect();
     };
   });
