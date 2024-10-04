@@ -8,14 +8,18 @@
   import { goToPreviousTest, goToNextTest } from "$lib/robot/navigation";
   import {
     getTestNameFromTestId,
-    getFailedTestsElement,
+    getFailedTestsElement as getFailedTestsElementFromPage,
     getTestIndexFromTestId,
     collapseRetryKeywords,
+    getNumberOfFailedTests as getNumberOfFailedTestsFromPage,
   } from "$lib/robot/utils";
   import CopyToClipboardButton from "$lib/components/custom/CopyToClipboardButton.svelte";
 
+  let failedTest = $state([]); // TODO
+
   let currentTestId = $state("");
   let totalFailedTestCount: number | undefined = $state(undefined);
+  let loadedFailedTestCount: number | undefined = $state(undefined);
 
   const currentTestName = $derived(getTestNameFromTestId(currentTestId));
   const currentTestHumanIndex = $derived(
@@ -23,8 +27,8 @@
   );
 
   let failingTestsAsRobotParams = $derived.by(() => {
-    if (!totalFailedTestCount) return "";
-    return getFailedTestsElement()
+    if (!loadedFailedTestCount) return "";
+    return getFailedTestsElementFromPage()
       .map(
         (e) =>
           e.querySelector(".element-header-left > .name")?.textContent ?? ""
@@ -35,9 +39,9 @@
   });
 
   onMount(() => {
-    const handleScroll = () => {
+    const updateCurrentTestIdFromPosition = () => {
       const scrollPosition = window.scrollY;
-      const divs = getFailedTestsElement() as HTMLDivElement[];
+      const divs = getFailedTestsElementFromPage() as HTMLDivElement[];
 
       for (let i = 0; i < divs.length; i++) {
         const div = divs[i];
@@ -56,11 +60,12 @@
       }
     };
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", updateCurrentTestIdFromPosition);
 
     const handleDomChanges = () => {
-      handleScroll();
-      totalFailedTestCount = getFailedTestsElement().length;
+      updateCurrentTestIdFromPosition();
+      totalFailedTestCount = getNumberOfFailedTestsFromPage();
+      loadedFailedTestCount = getFailedTestsElementFromPage().length;
     };
 
     const observer = new MutationObserver(() => {
@@ -75,7 +80,7 @@
     });
 
     return () => {
-      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("scroll", updateCurrentTestIdFromPosition);
       observer.disconnect();
     };
   });
@@ -119,7 +124,7 @@
     >
       {currentTestName}
       <span class="font-bold">
-        ({currentTestHumanIndex} / {totalFailedTestCount})
+        ({currentTestHumanIndex} / {loadedFailedTestCount} [{totalFailedTestCount}])
       </span>
     </span>
     <div class="flex gap-2">

@@ -97,8 +97,7 @@ export function getTestNameFromTestId(testId: string): string {
 }
 
 export function getFailedTestsElement(): HTMLElement[] {
-  return [...document.getElementsByClassName("test")].filter((e) => {
-    const htmlElement = e as HTMLElement;
+  return [...document.getElementsByClassName("test")].filter((htmlElement) => {
     const headerLeft = htmlElement.querySelector(
       ".element-header-left"
     ) as HTMLElement;
@@ -109,4 +108,11 @@ export function getFailedTestsElement(): HTMLElement[] {
 export function getTestIndexFromTestId(testId: string): number {
   const visibleFailedTests = getFailedTestsElement();
   return visibleFailedTests.findIndex((e) => e.id === testId);
+}
+
+export function getNumberOfFailedTests(): number {
+  const totalStatsRow = document.querySelector("#total-stats > tbody > tr");
+  if (!totalStatsRow) return 0;
+
+  return Number(totalStatsRow.childNodes[5].textContent);
 }
