@@ -1,7 +1,7 @@
-import { getFailedTestsElement } from "./utils";
+import { getFailedTestsElementFromPage } from "./utils";
 
 export function goToPreviousTest(currentTestId: string) {
-  const visibleFailedTests = getFailedTestsElement();
+  const visibleFailedTests = getFailedTestsElementFromPage();
   const currentTestIndex = visibleFailedTests.findIndex(
     (e) => e.id === currentTestId
   );
@@ -16,7 +16,7 @@ export function goToPreviousTest(currentTestId: string) {
 }
 
 export function goToNextTest(currentTestId: string) {
-  const visibleFailedTests = getFailedTestsElement();
+  const visibleFailedTests = getFailedTestsElementFromPage();
   const currentTestIndex = visibleFailedTests.findIndex(
     (e) => e.id === currentTestId
   );

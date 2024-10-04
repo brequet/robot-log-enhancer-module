@@ -88,15 +88,7 @@ export function collapseRetryKeywords() {
   });
 }
 
-export function getTestNameFromTestId(testId: string): string {
-  return (
-    document
-      .getElementById(testId)
-      ?.querySelector(".element-header-left > .name")?.textContent ?? ""
-  );
-}
-
-export function getFailedTestsElement(): HTMLElement[] {
+export function getFailedTestsElementFromPage(): HTMLElement[] {
   return [...document.getElementsByClassName("test")].filter((htmlElement) => {
     const headerLeft = htmlElement.querySelector(
       ".element-header-left"
@@ -105,12 +97,7 @@ export function getFailedTestsElement(): HTMLElement[] {
   }) as HTMLElement[];
 }
 
-export function getTestIndexFromTestId(testId: string): number {
-  const visibleFailedTests = getFailedTestsElement();
-  return visibleFailedTests.findIndex((e) => e.id === testId);
-}
-
-export function getNumberOfFailedTests(): number {
+export function getNumberOfFailedTestsFromPage(): number {
   const totalStatsRow = document.querySelector("#total-stats > tbody > tr");
   if (!totalStatsRow) return 0;
 
