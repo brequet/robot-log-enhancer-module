@@ -2,9 +2,9 @@
 
 <script lang="ts">
   import CopyToClipboardButton from "$lib/components/custom/CopyToClipboardButton.svelte";
-  import { Button, buttonVariants } from "$lib/components/ui/button/index.js";
+  import TestNavigation from "$lib/components/custom/TestNavigation.svelte";
+  import { buttonVariants } from "$lib/components/ui/button/index.js";
   import * as Dialog from "$lib/components/ui/dialog";
-  import { goToNextTest, goToPreviousTest } from "$lib/robot/navigation";
   import type { RobotTest } from "$lib/robot/types";
   import {
     collapseRetryKeywords,
@@ -13,6 +13,8 @@
   } from "$lib/robot/utils";
   import { onMount } from "svelte";
   import Tailwind from "./tailwind.svelte";
+
+  // TODO: create a store for failed tests and other stuff?
 
   let failedTests = $state([] as RobotTest[]);
 
@@ -23,14 +25,7 @@
     failedTests.map((e: RobotTest) => e.id).indexOf(currentTestId),
   );
 
-  let isPageLoaded = $derived(
-    totalFailedTestCount && failedTests.length === totalFailedTestCount,
-  );
-
-  let isPreviousTestAvailable = $derived(currentTestIndex > 0);
-  let isNextTestAvailable = $derived(
-    totalFailedTestCount && currentTestIndex < totalFailedTestCount - 1,
-  );
+  let isPageLoaded = $derived(failedTests.length === totalFailedTestCount);
 
   let failingTestsAsRobotParams = $derived.by(() => {
     return failedTests
@@ -50,11 +45,12 @@
 
       failedTests = divs.map((testElement: HTMLElement) => {
         const id = testElement.id;
-        const title =
+        const divTitle =
           (testElement.querySelector(".element-header-left") as HTMLElement)
             ?.title ?? "";
+        const testName = divTitle.replace(/TEST\s+(.*?)\s+\[FAIL\]/, "$1");
         return {
-          name: title,
+          name: testName,
           id,
         };
       });
@@ -127,33 +123,13 @@
     </Dialog.Content>
   </Dialog.Root>
 
-  <div class="flex items-center justify-between w-full mr-6">
-    <span
-      class="whitespace-nowrap overflow-hidden text-ellipsis flex-grow text-left pl-4"
-    >
-      {failedTests[currentTestIndex]?.name}
-      <span class="font-bold">
-        ({currentTestIndex + 1} / {failedTests.length})
-      </span>
-      <span>
-        {#if !isPageLoaded}
-          (Loading..)
-        {/if}
-      </span>
-    </span>
-    <div class="flex gap-2">
-      <Button
-        on:click={() => goToPreviousTest(currentTestId)}
-        disabled={!isPreviousTestAvailable}
-      >
-        Previous
-      </Button>
-      <Button
-        on:click={() => goToNextTest(currentTestId)}
-        disabled={!isNextTestAvailable}
-      >
-        Next
-      </Button>
-    </div>
+  <div class="flex items-center w-full mx-6">
+    <TestNavigation
+      {failedTests}
+      {currentTestId}
+      {currentTestIndex}
+      {totalFailedTestCount}
+      {isPageLoaded}
+    />
   </div>
 </footer>
