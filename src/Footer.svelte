@@ -1,10 +1,8 @@
 <svelte:options customElement="robot-footer" />
 
 <script lang="ts">
-  import CopyToClipboardButton from "$lib/components/custom/CopyToClipboardButton.svelte";
+  import CopyFailingTestsModalButton from "$lib/components/custom/CopyFailingTestsModalButton.svelte";
   import TestNavigation from "$lib/components/custom/TestNavigation.svelte";
-  import { buttonVariants } from "$lib/components/ui/button/index.js";
-  import * as Dialog from "$lib/components/ui/dialog";
   import type { RobotTest } from "$lib/robot/types";
   import {
     collapseRetryKeywords,
@@ -26,13 +24,6 @@
   );
 
   let isPageLoaded = $derived(failedTests.length === totalFailedTestCount);
-
-  let failingTestsAsRobotParams = $derived.by(() => {
-    return failedTests
-      .map((e: RobotTest) => `--test "${e.name}"`)
-      .join(" ")
-      .trim();
-  });
 
   $effect(() => {
     if (isPageLoaded) collapseRetryKeywords();
@@ -102,26 +93,8 @@
 <footer
   class="fixed left-0 right-0 bottom-0 w-full bg-slate-100 p-2 border-t border-gray-300 flex flex-row z-10"
 >
-  <Dialog.Root>
-    <Dialog.Trigger class={buttonVariants({ variant: "default" })}>
-      Print all failing tests as robot test params in console
-    </Dialog.Trigger>
-    <Dialog.Content class="max-w-3xl">
-      <Dialog.Header>
-        <Dialog.Title>Failing tests as Robot params</Dialog.Title>
-        <Dialog.Description>
-          You can copy and use these params to relaunch only failing tests.
-        </Dialog.Description>
-      </Dialog.Header>
-      <div
-        class="bg-muted text-muted-foreground p-4 pt-1 rounded-lg flex flex-col items-end"
-      >
-        <CopyToClipboardButton text={failingTestsAsRobotParams} />
-        <pre
-          class="whitespace-pre-wrap break-all font-mono">{failingTestsAsRobotParams}</pre>
-      </div>
-    </Dialog.Content>
-  </Dialog.Root>
+  <!-- TODO: on left a menu that reveals buttons for copy, or other things.. -->
+  <CopyFailingTestsModalButton {failedTests} />
 
   <div class="flex items-center w-full mx-6">
     <TestNavigation

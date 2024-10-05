@@ -15,7 +15,7 @@
   }
 </script>
 
-<Button on:click={copyToClipboard} variant="outline" size="icon">
+<Button on:click={copyToClipboard} variant="outline" size="smallIcon">
   {#if copied}
     <ClipboardCheck class="h-4 w-4" />
   {:else}
