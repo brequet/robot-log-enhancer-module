@@ -3,6 +3,7 @@
     import { goToNextTest, goToPreviousTest } from "$lib/robot/navigation";
     import type { RobotTest } from "$lib/robot/types";
     import { ArrowLeft, ArrowRight } from "lucide-svelte";
+    import KeyboardNavigation from "./KeyboardNavigation.svelte";
 
     let {
         failedTests,
@@ -23,6 +24,11 @@
         totalFailedTestCount && currentTestIndex < totalFailedTestCount - 1,
     );
 </script>
+
+<KeyboardNavigation
+    handleLeft={() => goToPreviousTest(currentTestId)}
+    handleRight={() => goToNextTest(currentTestId)}
+/>
 
 <div class="flex gap-2">
     <Button
