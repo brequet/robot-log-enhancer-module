@@ -10,12 +10,12 @@
         failedTests: RobotTest[];
     } = $props();
 
-    let failingTestsAsRobotParams = $derived.by(() => {
-        return failedTests
+    let failingTestsAsRobotParams = $derived(
+        failedTests
             .map((e: RobotTest) => `--test "${e.name}"`)
             .join(" ")
-            .trim();
-    });
+            .trim(),
+    );
 </script>
 
 <Dialog.Root>
@@ -34,7 +34,7 @@
             <CopyToClipboardButton text={failingTestsAsRobotParams} />
             <div class="bg-muted text-muted-foreground rounded-lg p-4 mt-1">
                 <pre
-                    class="whitespace-pre-wrap break-all font-mono">{failingTestsAsRobotParams}</pre>
+                    class="whitespace-pre-wrap w-full break-all font-mono">{failingTestsAsRobotParams}</pre>
             </div>
         </div>
     </Dialog.Content>

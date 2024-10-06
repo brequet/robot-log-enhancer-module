@@ -22,7 +22,7 @@
   },
   "packageManager": "yarn@1.22.21+sha1.1959a18351b811cdeedbd484a8f86c3cc3bbaf72",
   "dependencies": {
-    "bits-ui": "^0.21.15",
+    "bits-ui": "^0.21.16",
     "clsx": "^2.1.1",
     "lucide-svelte": "^0.447.0",
     "svelte-add": "^2.7.3",
