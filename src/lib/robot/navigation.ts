@@ -11,7 +11,7 @@ export function goToPreviousTest(currentTestId: string) {
   const previousElement = visibleFailedTests[currentTestIndex - 1];
   window.scrollTo({
     top: previousElement.offsetTop,
-    behavior: "smooth",
+    behavior: "instant",
   });
 }
 
@@ -26,6 +26,6 @@ export function goToNextTest(currentTestId: string) {
   const element = visibleFailedTests[currentTestIndex + 1];
   window.scrollTo({
     top: element.offsetTop + 1,
-    behavior: "smooth",
+    behavior: "instant",
   });
 }
