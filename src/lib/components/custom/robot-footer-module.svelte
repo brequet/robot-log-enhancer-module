@@ -9,9 +9,16 @@
   import { injectFixedStyleForShadowDOM } from "$lib/styles/tw-style-injection";
   import Footer from "../footer.svelte";
 
-  injectFixedStyleForShadowDOM($host());
+  const componentHost = $host();
+  injectFixedStyleForShadowDOM(componentHost);
 
   const robotData = createRobotState();
+
+  let robotFooterModuleContainer: HTMLElement | null = $state(null);
 </script>
 
-<Footer state={robotData} />
+<div bind:this={robotFooterModuleContainer}></div>
+
+{#if robotFooterModuleContainer != null}
+  <Footer state={robotData} moduleContainer={robotFooterModuleContainer} />
+{/if}
