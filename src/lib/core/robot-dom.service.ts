@@ -23,11 +23,11 @@ export function parseTestFromElement(element: HTMLElement): RobotTest {
 /**
  * Gets the total number of failed tests from the stats table.
  */
-export function getNumberOfFailedTestsFromPage(): number {
+export function getTotalFailedTestCount(): number {
   const totalStatsRow = document.querySelector("#total-stats > tbody > tr");
   if (!totalStatsRow) return 0;
   // The 6th cell (index 5) contains the failed test count.
-  return Number(totalStatsRow.childNodes[5].textContent);
+  return Number(totalStatsRow.childNodes[5].textContent ?? 0);
 }
 
 /**

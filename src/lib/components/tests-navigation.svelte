@@ -1,6 +1,6 @@
 <script lang="ts">
   import { Button } from "$lib/components/ui/button";
-  import type { RobotState } from "$lib/core/robot/types";
+  import type { RobotState } from "$lib/core/types";
   import { ArrowLeft, ArrowRight } from "lucide-svelte";
 
   let { state }: { state: RobotState } = $props();
@@ -22,7 +22,7 @@
 <svelte:window onkeydown={handleKeydown} />
 
 <span
-  class="flex-grow overflow-hidden pl-4 text-left text-ellipsis whitespace-nowrap"
+  class="flex-grow overflow-hidden text-ellipsis whitespace-nowrap pl-4 text-left"
 >
   {#if state.failedTests.length > 0}
     <span class="mr-1 font-bold">
@@ -34,7 +34,7 @@
     {state.currentTest.name}
   {/if}
 
-  {#if !state.isPageLoaded}
+  {#if state.isLoading}
     <span class="ml-2 animate-pulse">(Loading...)</span>
   {/if}
 </span>

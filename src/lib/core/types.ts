@@ -8,7 +8,7 @@ export type RobotState = {
   currentTest: RobotTest | null;
   currentTestIndex: number;
   totalFailedTestCount: number;
-  isPageLoaded: boolean;
+  isLoading: boolean;
   goToPreviousTest: () => void;
   goToNextTest: () => void;
 };

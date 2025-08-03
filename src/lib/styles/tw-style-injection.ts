@@ -12,7 +12,10 @@ import twStyleSheet from "./tw.css?inline";
 export function injectFixedStyleForShadowDOM(host: HTMLElement) {
   const style = document.createElement("style");
   style.textContent = fixTailwindForShadowDOM(twStyleSheet);
-  host.shadowRoot?.appendChild(style);
+  if (!host.shadowRoot) {
+    throw new Error("Host element does not have a shadow root.");
+  }
+  host.shadowRoot.appendChild(style);
 }
 
 function fixTailwindForShadowDOM(css: string): string {

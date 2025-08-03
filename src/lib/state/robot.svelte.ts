@@ -1,10 +1,10 @@
 import {
   getFailedTestElements,
-  getNumberOfFailedTestsFromPage,
+  getTotalFailedTestCount,
   parseTestFromElement,
   scrollToTest,
-} from "$lib/core/robot/dom";
-import type { RobotState, RobotTest } from "$lib/core/robot/types";
+} from "$lib/core/robot-dom.service";
+import type { RobotState, RobotTest } from "$lib/core/types";
 import { onMount } from "svelte";
 import { scrollY } from "svelte/reactivity/window";
 
@@ -20,8 +20,8 @@ export function createRobotState(): RobotState {
   );
   const currentTest = $derived(failedTests[currentTestIndex]);
 
-  const isPageLoaded = $derived(
-    failedTests.length > 0 && failedTests.length === totalFailedTestCount,
+  const isLoading = $derived(
+    failedTests.length === 0 || failedTests.length !== totalFailedTestCount,
   );
 
   $effect(() => {
@@ -44,7 +44,7 @@ export function createRobotState(): RobotState {
     const handleDomChanges = () => {
       failedTestElements = getFailedTestElements();
       failedTests = failedTestElements.map(parseTestFromElement);
-      totalFailedTestCount = getNumberOfFailedTestsFromPage();
+      totalFailedTestCount = getTotalFailedTestCount();
     };
 
     handleDomChanges(); // Initial run
@@ -82,8 +82,8 @@ export function createRobotState(): RobotState {
     get totalFailedTestCount() {
       return totalFailedTestCount;
     },
-    get isPageLoaded() {
-      return isPageLoaded;
+    get isLoading() {
+      return isLoading;
     },
     goToPreviousTest,
     goToNextTest,

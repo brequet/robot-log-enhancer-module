@@ -1,4 +1,4 @@
-import "$lib/components/custom/robot-footer.svelte";
+import "$lib/components/custom/robot-footer-module.svelte";
 import robotExpandRecursivelyScript from "$lib/overrides/robot-expand-recursively.js?raw";
 
 function initializeRobotFooter(): void {
@@ -6,7 +6,7 @@ function initializeRobotFooter(): void {
     return;
   }
 
-  const footer = document.createElement("robot-footer");
+  const footer = document.createElement("robot-footer-module");
 
   document.body.appendChild(footer);
   document.body.style.paddingBottom = "90vh";
