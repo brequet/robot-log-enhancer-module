@@ -1,6 +1,6 @@
 # --- Configuration ---
-$SourceHtmlFile = ".\temp\log.html"
-$OutputHtmlFile = ".\temp\log.injected.html"
+$SourceHtmlFile = ".\test-injection\log.html"
+$OutputHtmlFile = ".\test-injection\log.injected.html"
 $BuiltJsFile = ".\dist\robot-log-enhancer.umd.js"
 
 # --- Main Script ---
@@ -36,4 +36,4 @@ $injectedHtml = $htmlContent.Replace("</body>", "$injectionTag`n</body>")
 Write-Host "Injecting script into $OutputHtmlFile..." -ForegroundColor Green
 Set-Content -Path $OutputHtmlFile -Value $injectedHtml -Force
 
-Write-Host "✅ Injection complete! Open ` temp\log.injected.html` in your browser to test." -ForegroundColor Yellow
+Write-Host "✅ Injection complete! Open ` test-injection\log.injected.html` in your browser to test." -ForegroundColor Yellow
