@@ -33,13 +33,11 @@
         --ascending-icon: url(data:image/gif;base64,R0lGODlhCwAJAKEAAAAAAH9/fwAAAAAAACH5BAEAAAIALAAAAAALAAkAAAIUlBWnFr3cnIr0WQOyBmvzp13CpxQAOw==);
         --descending-icon: url(data:image/gif;base64,R0lGODlhCwAJAKEAAAAAAH9/fwAAAAAAACH5BAEAAAIALAAAAAALAAkAAAIUlAWnBr3cnIr0WROyDmvzp13CpxQAOw==);
       }
-
       @media (prefers-color-scheme: dark) {
         :root {
           color-scheme: dark;
         }
       }
-
       [data-theme="dark"] {
         --text-color: #e2e1d7;
         --background-color: #1c2227;
@@ -55,21 +53,17 @@
         --ascending-icon: url(data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAAJAgMAAACZCj6+AAAAAXNSR0IB2cksfwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAlQTFRFAAAAfn5+////f/cqYgAAAAN0Uk5TAP//RFDWIQAAACdJREFUeJxjYHBgYGAMYGBgDWFgEA1lAAOtVQwMXCsYGJgWADkNDAA78QP9oKr7vwAAAABJRU5ErkJggg==);
         --descending-icon: url(data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAAJAgMAAACZCj6+AAAAAXNSR0IB2cksfwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAlQTFRFAAAA////fn5+K6jOaAAAAAN0Uk5TAP//RFDWIQAAACdJREFUeJxjYHBgYGAMYGBgDWFgEA1lAAOtVQwMXCsYGJgWADkNDAA78QP9oKr7vwAAAABJRU5ErkJggg==);
       }
-
       /* Generic and misc styles */
       body {
         font-family: Helvetica, sans-serif;
         font-size: 0.8em;
-        color: black;
-        /* Fallback value */
+        color: black; /* Fallback value */
         color: var(--text-color);
         padding: 6px;
-        background: white;
-        /* Fallback value */
+        background: white; /* Fallback value */
         background: var(--background-color);
         margin-left: 15px;
       }
-
       body[theme-toggled] {
         transition:
           background 0.3s,
@@ -77,160 +71,124 @@
           color 0.3s,
           border-color 0.3s;
       }
-
       table {
         table-layout: fixed;
         word-wrap: break-word;
         empty-cells: show;
         font-size: 1em;
       }
-
       th,
       td {
         vertical-align: top;
       }
-
       br {
-        mso-data-placement: same-cell;
-        /* maintain line breaks in Excel */
+        mso-data-placement: same-cell; /* maintain line breaks in Excel */
       }
-
       hr {
-        background: #ccc;
-        /* Fallback value */
+        background: #ccc; /* Fallback value */
         background: var(--secondary-color);
         height: 1px;
         border: 0;
       }
-
       a,
       a:link,
       a:visited {
         text-decoration: none;
-        color: #15c;
-        /* Fallback value */
+        color: #15c; /* Fallback value */
         color: var(--link-color);
       }
-
       a > img {
         border-width: 1px !important;
         border-style: solid !important;
-        border-color: #15c !important;
-        /* Fallback value */
+        border-color: #15c !important; /* Fallback value */
         border-color: var(--link-color) !important;
       }
-
       a:hover,
       a:active {
         text-decoration: underline;
-        color: #61c;
-        /* Fallback value */
+        color: #61c; /* Fallback value */
         color: var(--link-hover-color);
       }
-
       select {
-        background-color: white;
-        /* Fallback value */
+        background-color: white; /* Fallback value */
         background-color: var(--background-color);
-        color: black;
-        /* Fallback value */
+        color: black; /* Fallback value */
         color: var(--text-color);
         border-width: 2px;
         border-style: solid;
-        border-color: #ccc;
-        /* Fallback value */
+        border-color: #ccc; /* Fallback value */
         border-color: var(--secondary-color);
         border-radius: 4px;
       }
-
       .parent-name {
         font-size: 0.7em;
         letter-spacing: -0.07em;
       }
-
       .message {
         white-space: pre-wrap;
       }
-
       /* Headers */
       #header {
         width: 65em;
         height: 3em;
         margin: 20px 0 6px 0;
       }
-
       h1 {
         float: left;
         margin: 0 0 0.5em 0;
         width: 75%;
       }
-
       h2 {
         clear: left;
       }
-
       #generated {
         float: right;
         text-align: right;
         font-size: 0.9em;
         white-space: nowrap;
       }
-
       /* Documentation headers */
       .doc > h2 {
         font-size: 1.2em;
       }
-
       .doc > h3 {
         font-size: 1.1em;
       }
-
       .doc > h4 {
         font-size: 1em;
       }
-
       /* Status text colors -- !important allows using them in links */
       .fail {
-        color: #ce3e01 !important;
-        /* Fallback value */
+        color: #ce3e01 !important; /* Fallback value */
         color: var(--fail-link-color) !important;
         font-weight: bold;
       }
-
       .pass {
-        color: #098a09 !important;
-        /* Fallback value */
+        color: #098a09 !important; /* Fallback value */
         color: var(--pass-link-color) !important;
       }
-
       .skip {
-        color: #927201 !important;
-        /* Fallback value */
+        color: #927201 !important; /* Fallback value */
         color: var(--warn-link-color) !important;
         font-weight: bold;
       }
-
       .label {
         padding: 2px 5px;
         font-size: 0.75em;
         letter-spacing: 1px;
         white-space: nowrap;
-        color: black;
-        /* Fallback value */
+        color: black; /* Fallback value */
         color: var(--text-color);
-        background-color: #ddd;
-        /* Fallback value */
+        background-color: #ddd; /* Fallback value */
         background-color: var(--primary-color);
         border-radius: 3px;
       }
-
       .label.debug,
       .label.trace,
       .label.error,
       .label.keyword {
         letter-spacing: 0;
       }
-
       .label.pass,
       .label.fail,
       .label.error,
@@ -238,30 +196,23 @@
       .label.warn {
         font-weight: bold;
       }
-
       .label.pass {
-        background-color: #97bd61;
-        /* Fallback value */
+        background-color: #97bd61; /* Fallback value */
         background-color: var(--pass-color);
         color: #000 !important;
       }
-
       .label.fail,
       .label.error {
-        background-color: #ce3e01;
-        /* Fallback value */
+        background-color: #ce3e01; /* Fallback value */
         background-color: var(--fail-color);
         color: #fff !important;
       }
-
       .label.skip,
       .label.warn {
-        background-color: #fed84f;
-        /* Fallback value */
+        background-color: #fed84f; /* Fallback value */
         background-color: var(--warn-color);
         color: #000 !important;
       }
-
       /* Top right header */
       #top-right-header {
         position: fixed;
@@ -271,7 +222,6 @@
         width: 12em;
         text-align: center;
       }
-
       #report-or-log-link a {
         display: block;
         background: black;
@@ -282,20 +232,16 @@
         padding: 0.3em 0;
         border-bottom-left-radius: 4px;
       }
-
       #report-or-log-link a:hover {
         color: #ddd;
       }
-
       #log-level-selector {
         padding: 0.3em 0;
         font-size: 0.9em;
         border-bottom-left-radius: 4px;
-        background: #ddd;
-        /* Fallback value */
+        background: #ddd; /* Fallback value */
         background: var(--primary-color);
       }
-
       /* Statistics table */
       .statistics {
         width: 65em;
@@ -303,116 +249,89 @@
         empty-cells: show;
         margin-bottom: 1em;
       }
-
       .statistics tr:hover {
-        background: #eee;
-        /* Fallback value */
+        background: #eee; /* Fallback value */
         background: var(--highlight-color);
         cursor: pointer;
       }
-
       .statistics th,
       .statistics td {
         border-width: 1px;
         border-style: solid;
-        border-color: #ccc;
-        /* Fallback value */
+        border-color: #ccc; /* Fallback value */
         border-color: var(--secondary-color);
         padding: 0.1em 0.3em;
       }
-
       .statistics th {
-        background-color: #ddd;
-        /* Fallback value */
+        background-color: #ddd; /* Fallback value */
         background-color: var(--primary-color);
         padding: 0.2em 0.3em;
       }
-
       .statistics td {
         vertical-align: middle;
       }
-
       .stats-col-stat {
         width: 4.5em;
         text-align: center;
       }
-
       .stats-col-elapsed {
         width: 5.5em;
         text-align: center;
       }
-
       .stats-col-graph {
         width: 9em;
       }
-
       th.stats-col-graph:hover {
         cursor: default;
       }
-
       .stat-name {
         float: left;
       }
-
       .stat-name a,
       .stat-name span {
         font-weight: bold;
       }
-
       .tag-links {
         font-size: 0.9em;
         float: right;
         margin-top: 0.05em;
       }
-
       .tag-links span {
         margin-left: 0.2em;
       }
-
       /* Statistics graph */
       .graph,
       .empty-graph {
         border-width: 1px;
         border-style: solid;
-        border-color: #ccc;
-        /* Fallback value */
+        border-color: #ccc; /* Fallback value */
         border-color: var(--secondary-color);
         width: auto;
         height: 7px;
         padding: 0;
       }
-
       .empty-graph {
-        background: #eee;
-        /* Fallback value */
+        background: #eee; /* Fallback value */
         background: var(--highlight-color);
       }
-
       .pass-bar,
       .fail-bar,
       .skip-bar {
         float: left;
         height: 100%;
       }
-
       .fail-bar {
-        background: #ce3e01;
-        /* Fallback value */
+        background: #ce3e01; /* Fallback value */
         background: var(--fail-color);
       }
-
       .pass-bar {
-        background: #97bd61;
-        /* Fallback value */
+        background: #97bd61; /* Fallback value */
         background: var(--pass-color);
       }
-
       .skip-bar {
-        background: #fed84f;
-        /* Fallback value */
+        background: #fed84f; /* Fallback value */
         background: var(--warn-color);
       }
-
       /* Tablesorter - adapted from provided Blue Skin */
       .tablesorter-header {
         background-image: url(data:image/gif;base64,R0lGODlhCwAJAIAAAH9/fwAAACH5BAEAAAEALAAAAAALAAkAAAIRjAOnBr3cnIr0WUjTrC9e9BQAOw==);
@@ -420,42 +339,30 @@
         background-position: center right;
         cursor: pointer;
       }
-
       .tablesorter-header:hover {
-        background-color: #ccc;
-        /* Fallback value */
+        background-color: #ccc; /* Fallback value */
         background-color: var(--secondary-color);
       }
-
       .tablesorter-headerAsc {
-        background-image: url(data:image/gif;base64,R0lGODlhCwAJAKEAAAAAAH9/fwAAAAAAACH5BAEAAAIALAAAAAALAAkAAAIUlBWnFr3cnIr0WQOyBmvzp13CpxQAOw==);
-        /* Fallback value */
+        background-image: url(data:image/gif;base64,R0lGODlhCwAJAKEAAAAAAH9/fwAAAAAAACH5BAEAAAIALAAAAAALAAkAAAIUlBWnFr3cnIr0WQOyBmvzp13CpxQAOw==); /* Fallback value */
         background-image: var(--ascending-icon);
-        background-color: #ccc !important;
-        /* Fallback value */
+        background-color: #ccc !important; /* Fallback value */
         background-color: var(--secondary-color) !important;
       }
-
       .tablesorter-headerDesc {
-        background-image: url(data:image/gif;base64,R0lGODlhCwAJAKEAAAAAAH9/fwAAAAAAACH5BAEAAAIALAAAAAALAAkAAAIUlAWnBr3cnIr0WROyDmvzp13CpxQAOw==);
-        /* Fallback value */
+        background-image: url(data:image/gif;base64,R0lGODlhCwAJAKEAAAAAAH9/fwAAAAAAACH5BAEAAAIALAAAAAALAAkAAAIUlAWnBr3cnIr0WROyDmvzp13CpxQAOw==); /* Fallback value */
         background-image: var(--descending-icon);
-        background-color: #ccc !important;
-        /* Fallback value */
+        background-color: #ccc !important; /* Fallback value */
         background-color: var(--secondary-color) !important;
       }
-
       .sorter-false {
         background-image: none;
         cursor: default;
       }
-
       .sorter-false:hover {
-        background-color: #ddd;
-        /* Fallback value */
+        background-color: #ddd; /* Fallback value */
         background-color: var(--primary-color);
       }
-
       #theme-toggle {
         position: fixed;
         right: 0;
@@ -469,27 +376,22 @@
         border-top-right-radius: 3px;
         background: var(--highlight-color);
       }
-
       [data-theme="dark"] .dark-mode-icon,
       [data-theme="light"] .light-mode-icon {
         display: none;
       }
-
       [data-theme="dark"] .light-mode-icon,
       [data-theme="light"] .dark-mode-icon {
         display: block;
       }
-
       @keyframes highlight {
         0% {
           background: var(--primary-color);
         }
-
         100% {
           background: var(--target-color);
         }
       }
-
       :target {
         background: var(--target-color);
         transition: background 0.3s;
@@ -504,70 +406,57 @@
         --icon-highlight: var(--secondary-color);
         --elapsed-color: #666;
       }
-
       /* @media (prefers-color-scheme: dark) { */
       [data-theme="dark"] {
         --icon-filter: invert(1);
         --icon-highlight: #a39990;
         --elapsed-color: #999;
       }
-
       /* Containers */
       .suite,
       .test,
       #errors {
-        border-color: #ccc;
-        /* Fallback value */
+        border-color: #ccc; /* Fallback value */
         border-color: var(--secondary-color);
         border-width: 1px;
         border-style: solid;
         padding: 0.3em 0.2em;
         margin: 0.2em 0;
       }
-
       .test {
         border-style: dashed;
       }
-
       #errors,
       .messages {
         width: 100%;
         border-spacing: 0;
       }
-
       .children {
         display: none;
         margin-left: 1.4em;
       }
-
       .suite,
       .test,
       .keyword {
         margin-left: -0.2em;
       }
-
       #s1,
       .suite > .children > .keyword {
         margin-left: 0;
       }
-
       /* Suite, test and kw headers */
       .element-header {
         border: 1px solid transparent;
         border-radius: 2px;
         position: relative;
       }
-
       .element-header:hover {
         cursor: pointer;
-        background-color: #eee;
-        /* Fallback value */
+        background-color: #eee; /* Fallback value */
         background-color: var(--highlight-color);
-        border-color: #ccc;
-        /* Fallback value */
+        border-color: #ccc; /* Fallback value */
         border-color: var(--secondary-color);
       }
-
       .element-header-toggle {
         position: absolute;
         left: 3px;
@@ -582,35 +471,28 @@
         height: 10px;
         width: 10px;
         background-size: 6px 6px;
-        border-color: #ccc;
-        /* Fallback value */
+        border-color: #ccc; /* Fallback value */
         border-color: var(--icon-highlight);
         border-width: 1px;
         border-style: solid;
         border-radius: 2px;
       }
-
       .closed > .element-header-toggle {
         background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAGCAQAAABKxSfDAAAAAmJLR0QA/4ePzL8AAAAJcEhZcwAACxMAAAsTAQCanBgAAAAHdElNRQfeCR0JCDHdVYtxAAAAM0lEQVQI103MMQqAMBQFwVHyITaB3P+W1sKzSBC3mW6hRFw0pUB5DvF1bu9FN0RM3X/wAk98CUnvFTakAAAAAElFTkSuQmCC);
         background-image:
           url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4IiBoZWlnaHQ9IjgiIHZpZXdCb3g9IjAgMCA4IDgiPgogIDxwYXRoIGQ9Ik0zIDB2M2gtM3YyaDN2M2gydi0zaDN2LTJoLTN2LTNoLTJ6IiAvPgo8L3N2Zz4=),
           none;
       }
-
       .element-header:hover > .element-header-toggle {
-        background-color: #ccc;
-        /* Fallback value */
+        background-color: #ccc; /* Fallback value */
         background-color: var(--icon-highlight);
       }
-
       .element-header-right:hover ~ .element-header-toggle {
         background-color: transparent;
       }
-
       .element-header-left {
         padding: 3px 80px 3px 20px;
       }
-
       .element-header-right {
         position: absolute;
         right: 0;
@@ -618,29 +500,23 @@
         padding: 3px;
         cursor: default;
       }
-
       .element-header .label {
         margin-right: 0.5em;
       }
-
       .name {
         font-weight: bold;
         white-space: pre-wrap;
       }
-
       .arg,
       .assign {
         white-space: pre-wrap;
       }
-
       .elapsed {
         float: right;
-        color: #666;
-        /* Fallback value */
+        color: #666; /* Fallback value */
         color: var(--elapsed-color);
         padding-left: 1em;
       }
-
       .link {
         background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEwAACxMBAJqcGAAAAHlJREFUGJVtzrEJwmAQBtCn6ASuIKTIBhY2gmghBiJYB1udwk10B8FJbKMBcQFbtbkfJHrVwfu+4/idJR64Y9H7E3higj5O3S8Y44ApLnjhnXCNGhV2yNGggDJwiC02gavUbpDFvscRo4QdXOMKDHBufz3HLYKzNn4AbSkV3fncGQYAAAAASUVORK5CYII=);
         background-image:
@@ -648,7 +524,6 @@
           none;
         filter: var(--icon-filter);
       }
-
       .expand {
         background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEwAACxMBAJqcGAAAADtJREFUGJVjYCACKDAwMByA0ljFDjAwMPxnYGB4ABVQgLL/Q+VQBB6gseGmIivCkERXhFUSWRFOSawAAEl7E3uv1iMcAAAAAElFTkSuQmCC);
         background-image:
@@ -656,7 +531,6 @@
           none;
         filter: var(--icon-filter);
       }
-
       .collapse {
         background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEwAACxMBAJqcGAAAAC5JREFUGJVjYCARNEAxTsn/UIyhCFkSQxG6ThQ+C5IpjWhG1yNb4YDFTdjEMAEACi8Q++9Y9TAAAAAASUVORK5CYII=);
         background-image:
@@ -664,7 +538,6 @@
           none;
         filter: var(--icon-filter);
       }
-
       .expand,
       .collapse,
       .link {
@@ -677,65 +550,52 @@
         background-size: 8px 8px;
         background-repeat: no-repeat;
         background-position: center;
-        border-color: #ccc;
-        /* Fallback value */
+        border-color: #ccc; /* Fallback value */
         border-color: var(--icon-highlight);
         border-width: 1px;
         border-style: solid;
         border-radius: 2px;
       }
-
       .link {
         background-size: 10px 10px;
       }
-
       .element-header:hover a {
         visibility: visible;
       }
-
       .expand:hover,
       .collapse:hover,
       .link:hover {
-        background-color: #ccc;
-        /* Fallback value */
+        background-color: #ccc; /* Fallback value */
         background-color: var(--icon-highlight);
       }
-
       /* Messages and errors */
       .messages .time,
       .messages .message {
         font-family: monospace;
         font-size: 1.1em;
       }
-
       #errors .message {
         font-family: monospace;
         font-size: 1.2em;
       }
-
       .message-row {
         height: 20px;
       }
-
       .time {
         width: 7.5em;
       }
-
       .error-time {
         width: 11em;
         font-size: 0.9em;
         white-space: nowrap;
       }
-
       .level {
         width: 5em;
         text-align: center;
       }
-
       .select-message {
         width: 24px;
       }
-
       .select-message > div {
         float: right;
         margin-right: 2px;
@@ -745,58 +605,47 @@
         background-repeat: no-repeat;
         background-position: center;
       }
-
       .message-row:hover .select-message div {
         background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAQAAAD8fJRsAAAAAmJLR0QA/4ePzL8AAAAJcEhZcwAACxMAAAsTAQCanBgAAAAHdElNRQfeCR0MOzhWKZQOAAAASUlEQVQY032PsRHAIAwDX9BkicD+W8UMEqegAQJWKZ/+3sLZJhFGQEZzNaIa4ibh66En867VNaIeoP5WppNuIGoAlOm3g5VC1AdYeQv1BZPRSgAAAABJRU5ErkJggg==);
         background-image:
           url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4IiBoZWlnaHQ9IjgiIHZpZXdCb3g9IjAgMCA4IDgiPgogIDxwYXRoIGQ9Ik0wIDB2MWg4di0xaC04em0wIDJ2MWg2di0xaC02em0wIDJ2MWg4di0xaC04em0wIDJ2MWg2di0xaC02eiIgLz4KPC9zdmc+),
           none;
         filter: var(--icon-filter);
-        border-color: #ccc;
-        /* Fallback value */
+        border-color: #ccc; /* Fallback value */
         border-color: var(--icon-highlight);
         border-width: 1px;
         border-style: solid;
         border-radius: 2px;
       }
-
       .select-message:hover div {
-        background-color: #ccc;
-        /* Fallback value */
+        background-color: #ccc; /* Fallback value */
         background-color: var(--icon-highlight);
         cursor: pointer;
       }
-
       /* Message tables - these MUST NOT be combined together because otherwise
    dynamically altering them based on visible log level is not possible. */
       .trace-message {
         display: table;
       }
-
       .debug-message {
         display: table;
       }
-
       /* Metadata */
       .metadata {
         width: 100%;
         border-spacing: 0.2em;
       }
-
       .metadata th {
         width: 12em;
         vertical-align: top;
         text-align: left;
       }
-
       .metadata td {
         vertical-align: top;
       }
-
       .keyword-metadata {
         font-size: 0.9em;
       }
-
       /* Custom styles for statistics */
       #total-stats tr:hover,
       #tag-stats tr:hover {
@@ -809,21 +658,17 @@
         padding: 0;
         font-size: 8pt;
       }
-
       a:link,
       a:visited {
         color: black;
       }
-
       #header {
         width: auto;
       }
-
       .details,
       .statistics {
         width: 100%;
       }
-
       #generated-ago,
       #top-right-header,
       #normal-selector,
@@ -834,30 +679,24 @@
       .details-col-toggle {
         display: none;
       }
-
       .element-header-text,
       .children {
         margin: 0;
       }
-
       #test-details {
         border-collapse: collapse;
         background: white;
       }
-
       #test-details th,
       #test-details td {
         border: 1px solid #ccc;
       }
-
       .details-col-header {
         padding: 0;
       }
-
       #print-selector {
         display: table-cell;
       }
-
       .tablesorter-header {
         background-image: none;
         background: #ddd !important;
@@ -872,20 +711,16 @@
         border: 1px solid #ccc;
         background: #eee;
       }
-
       #javascript-disabled h1 {
         width: 100%;
         float: none;
       }
-
       #javascript-disabled ul {
         font-size: 1.2em;
       }
-
       #javascript-disabled li {
         margin: 0.5em 0;
       }
-
       #javascript-disabled b {
         font-style: italic;
       }
@@ -895,7 +730,6 @@
         margin: 0.7em 1em 0.1em 1em;
         padding: 0;
       }
-
       .doc > p,
       .doc > h1,
       .doc > h2,
@@ -903,67 +737,54 @@
       .doc > h4 {
         margin: 0.7em 0 0.1em 0;
       }
-
       .doc > *:first-child {
         margin-top: 0.1em;
       }
-
       .doc table {
         background: transparent;
         border-collapse: collapse;
         empty-cells: show;
         font-size: 0.9em;
       }
-
       .doc table th,
       .doc table td {
         background: transparent;
         padding: 0.1em 0.3em;
         height: 1.2em;
       }
-
       .doc table th {
         text-align: center;
         letter-spacing: 0.1em;
       }
-
       .doc pre {
         border-radius: 2px;
         font-size: 1.1em;
         letter-spacing: 0.05em;
-        background: #eee;
-        /* Fallback value */
+        background: #eee; /* Fallback value */
         background: var(--highlight-color);
       }
-
       .doc code {
         border-radius: 2px;
         padding: 0 0.2em;
         letter-spacing: 0.05em;
-        background: #eee;
-        /* Fallback value */
+        background: #eee; /* Fallback value */
         background: var(--highlight-color);
       }
-
       .doc li {
         list-style-position: inside;
         list-style-type: square;
       }
-
       .doc img,
       .doc table,
       .doc table th,
       .doc table td {
         border-width: 1px;
         border-style: solid;
-        border-color: #ccc;
-        /* Fallback value */
+        border-color: #ccc; /* Fallback value */
         border-color: var(--secondary-color);
       }
-
       .doc hr {
-        background: #ccc;
-        /* Fallback value */
+        background: #ccc; /* Fallback value */
         background: var(--secondary-color);
         height: 1px;
         border: 0;
@@ -10022,19 +9843,19 @@
     </script>
     <script type="text/javascript">
       /*
-            Copyright 2008-2013
-                Matthias Ehmann,
-                Michael Gerhaeuser,
-                Carsten Miller,
-                Bianca Valentin,
-                Alfred Wassermann,
-                Peter Wilfahrt
-            Dual licensed under the Apache License Version 2.0, or LGPL Version 3 licenses.
-            You should have received a copy of the GNU Lesser General Public License
-            along with JSXCompressor.  If not, see <http://www.gnu.org/licenses/>.
-            You should have received a copy of the Apache License along with JSXCompressor.
-            If not, see <http://www.apache.org/licenses/>.
-        */
+    Copyright 2008-2013
+        Matthias Ehmann,
+        Michael Gerhaeuser,
+        Carsten Miller,
+        Bianca Valentin,
+        Alfred Wassermann,
+        Peter Wilfahrt
+    Dual licensed under the Apache License Version 2.0, or LGPL Version 3 licenses.
+    You should have received a copy of the GNU Lesser General Public License
+    along with JSXCompressor.  If not, see <http://www.gnu.org/licenses/>.
+    You should have received a copy of the Apache License along with JSXCompressor.
+    If not, see <http://www.apache.org/licenses/>.
+*/
       (function () {
         var e, r, n;
         ((function (t) {
@@ -12247,7 +12068,7 @@
         3,
         4,
         [],
-        [0, 0, 469],
+        [0, 0, 3100],
         [],
         [
           [
@@ -12255,10 +12076,10 @@
             0,
             6,
             [],
-            [1, 255, 2],
+            [1, 261, 1],
             [
-              [0, 7, 8, 0, 9, 10, 0, 0, [1, 256, 0], []],
-              [0, 11, 8, 0, 12, 13, 0, 0, [1, 257, 0], []],
+              [0, 7, 8, 0, 9, 10, 0, 0, [1, 262, 1], []],
+              [0, 11, 8, 0, 12, 13, 0, 0, [1, 263, 0], []],
             ],
           ],
           [
@@ -12266,31 +12087,31 @@
             0,
             15,
             [],
-            [1, 257, 1],
-            [[0, 16, 17, 0, 18, 19, 0, 0, [1, 258, 0], [[258, 2, 20]]]],
+            [1, 263, 1],
+            [[0, 16, 17, 0, 18, 19, 0, 0, [1, 263, 0], [[263, 2, 20]]]],
           ],
           [
             21,
             0,
             22,
             [],
-            [0, 258, 1, 23],
-            [[0, 24, 8, 0, 25, 23, 0, 0, [0, 258, 1], [[258, 5, 23]]]],
+            [0, 264, 0, 23],
+            [[0, 24, 8, 0, 25, 23, 0, 0, [0, 264, 0], [[264, 5, 23]]]],
           ],
           [
             26,
             0,
             27,
             [],
-            [0, 259, 1, 28],
-            [[0, 29, 8, 0, 30, 31, 0, 0, [0, 259, 0], [[259, 5, 28]]]],
+            [0, 265, 0, 28],
+            [[0, 29, 8, 0, 30, 31, 0, 0, [0, 265, 0], [[265, 5, 28]]]],
           ],
           [
             32,
             0,
             33,
             [],
-            [1, 260, 61],
+            [1, 266, 217],
             [
               [
                 0,
@@ -12301,15 +12122,15 @@
                 37,
                 38,
                 0,
-                [1, 260, 60],
+                [1, 266, 215],
                 [
-                  [319, 2, 39],
-                  [319, 2, 40],
-                  [320, 2, 41],
+                  [480, 2, 39],
+                  [480, 2, 40],
+                  [480, 2, 41],
                 ],
               ],
-              [0, 11, 8, 0, 12, 42, 0, 0, [1, 320, 0], [[320, 2, 43]]],
-              [0, 44, 8, 0, 45, 46, 0, 0, [1, 321, 0], []],
+              [0, 11, 8, 0, 12, 42, 0, 0, [1, 481, 0], [[481, 2, 43]]],
+              [0, 44, 8, 0, 45, 46, 0, 0, [1, 481, 0], []],
             ],
           ],
           [
@@ -12317,9 +12138,9 @@
             0,
             48,
             [],
-            [0, 322, 147, 49],
+            [0, 483, 613, 49],
             [
-              [0, 50, 8, 0, 51, 52, 53, 0, [1, 322, 0], [[322, 2, 54]]],
+              [0, 50, 8, 0, 51, 52, 53, 0, [1, 483, 1], [[484, 2, 54]]],
               [
                 0,
                 55,
@@ -12329,14 +12150,14 @@
                 57,
                 38,
                 0,
-                [1, 322, 145],
+                [1, 484, 610],
                 [
-                  [467, 2, 58],
-                  [467, 2, 59],
-                  [467, 2, 60],
+                  [1094, 2, 58],
+                  [1094, 2, 59],
+                  [1094, 2, 60],
                 ],
               ],
-              [0, 11, 8, 0, 12, 61, 0, 0, [1, 467, 1], [[468, 2, 43]]],
+              [0, 11, 8, 0, 12, 61, 0, 0, [1, 1095, 0], [[1095, 2, 43]]],
               [
                 0,
                 29,
@@ -12346,17 +12167,45 @@
                 62,
                 0,
                 0,
-                [0, 468, 0],
+                [0, 1095, 1],
                 [
-                  [468, 2, 43],
-                  [468, 5, 49],
+                  [1096, 2, 43],
+                  [1096, 5, 49],
+                ],
+              ],
+            ],
+          ],
+          [
+            63,
+            0,
+            64,
+            [],
+            [0, 1096, 2003, 65],
+            [
+              [
+                0,
+                66,
+                8,
+                0,
+                67,
+                68,
+                0,
+                0,
+                [0, 1097, 2002],
+                [
+                  [0, 29, 8, 0, 30, 69, 0, 0, [0, 1097, 0], [[1097, 5, 70]]],
+                  [0, 29, 8, 0, 30, 69, 0, 0, [0, 1597, 0], [[1597, 5, 70]]],
+                  [0, 29, 8, 0, 30, 69, 0, 0, [0, 2098, 0], [[2098, 5, 70]]],
+                  [0, 29, 8, 0, 30, 69, 0, 0, [0, 2598, 1], [[2598, 5, 70]]],
+                  [0, 29, 8, 0, 30, 69, 0, 0, [0, 3099, 0], [[3099, 5, 70]]],
+                  [3099, 5, 65],
                 ],
               ],
             ],
           ],
         ],
         [],
-        [6, 3, 3, 0],
+        [7, 3, 4, 0],
       ];
     </script>
     <script type="text/javascript">
@@ -12404,7 +12253,7 @@
         "eNqzSVTIKEpNs1XKKCkpKLbS188qzs8ryElMTs3Iz0lJLdIrqSzITM5PSdVLzs/VL8gvLinWN1SyI0W1jX6iHQCxayXE",
         "*${response}",
         "*GET Request : url=https://jsonplaceholder.typicode.com/posts/1 \n path_url=/posts/1 \n headers={'User-Agent': 'python-requests/2.32.4', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'} \n body=None \n ",
-        "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",
+        "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",
         "*${response} = &lt;Response [200]&gt;",
         "*${response.status_code}    200",
         "*Argument types are:\n&lt;class 'int'&gt;\n&lt;class 'str'&gt;",
@@ -12423,18 +12272,26 @@
         "*<p>Sends a POST request.\x3c/p>",
         '*<a href="https://jsonplaceholder.typicode.com/posts">https://jsonplaceholder.typicode.com/posts\x3c/a>    json=${data}',
         "*POST Request : url=https://jsonplaceholder.typicode.com/posts \n path_url=/posts \n headers={'User-Agent': 'python-requests/2.32.4', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '61', 'Content-Type': 'application/json'} \n body=b'{\"title\": \"Test Post\", \"body\": \"Test content\", \"userId\": \"1\"}' \n ",
-        "eNq1VE1z2zYQvftXYDDj6iJIJChREh2mo8h24tayNJImtdt0PBC5JFFTBAuAthWP/3sAUPlye0gPvYij995i9y0Wu1ysN2gFqhaVAhShRpZxoXWton7/LyWqumQJFKJMQfb0vuaJSKGXiF2/FkordISUZrpRMfX8LpLATEg8M18NqSELYCZQxU+dU4N0ItRZN1UXeQGaNjmiHh0in0b+JPJD9Ha+6XRRZyYqDZUmm33tAlhdlzxhmovKFXSCkoJJBTpudEbG34ZcQpXrwgaN6QGvILGRFrsDqAkr+T1YbpokoBSxoVKUZFqW4oGYwlNzEGelshFaNv+mPXs03oG8a71Z4aVoC3RJWVLAZ60lK0ESi1nyTLPcYr/18ZCS61/ytyI7+/XjPr0x8dfFZTqY3GtF0zvs1I81l+AyEN8CX/IY5BVDhYQsxj9+W33f8/Hr/6Z/1WevbeorcGaesIRaSH2rBY5wAVLcNaSCEncN0Q7R7eHScfQHfs8Z/rOLd+zxluWAoyD0vC5WjWvobSaZux0ceT0zPjhjvGwkfIf7zzb7UrJ8x152c+VKIRvRVpZL0dQvq4IqrQWvtC3nCZvptoJDB4yi14qd59aZ+lnFLKe78PxOHtM3+2N6Pr+5EtXF+kGtH7bnMwOspou/k3XhXYXl749+UIvj4PTDh8bzaKh4GoPvj7xROiQeZSMyCCAj28EQCE2yQUq9IMxG6UGuVeyPhgNKg+EwxM8ve/X81SavcnL22Yw1/NVm/P84+ont6pMf9ePE37uxta9B3oO05SalaNKsZNJd3Xsm9xZdSJ5zsxGuybvNZknmoAuRkoWJkTyFLrJPr9bGuJlM0wEXyt0g0J6HDi0w965NEsNdk2/XB1nUdoxUOzeq4lnWipbiAcxTJ29cDeaZmdlVLbUye6rkO262if21vO953ktyBTvGK1uREUwmk3/yZkO54LYfYXvELCPtfli7rWkFpzdX0/nFzLHnZDW9cSeGk2ES0Ml47G99fzsk89XaKlipibpP3PUHMY4GgwCfoB2Lx+HAZHg2K3cr0n38dIQQ1lyXZo4Q3oDSaGleNO5a3Cq+wEnbr5ZpFMiL1HJ+C3D7x2yBI3vyJ+Rc7no=",
+        "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",
         "*${response} = &lt;Response [201]&gt;",
         "*${response.status_code}    201",
         "*${response.json()}[id]    999",
+        "*Wait Until Keyword Succeeds Test",
+        "*<p>This test uses Wait Until Keyword Succeeds and fails due to timeout.\x3c/p>",
+        "*Keyword 'Should Be Equal As Numbers' failed after retrying for 2 seconds. The last error was: 1.0 != 2.0",
+        "*Wait Until Keyword Succeeds",
+        "*<p>Runs the specified keyword and retries if it fails.\x3c/p>",
+        "*2 seconds    0.5 seconds    Should Be Equal As Numbers    1    2",
+        "*1    2",
+        "*1.0 != 2.0",
       ]);
     </script>
     <script type="text/javascript">
       window.output["stats"] = [
         [
           {
-            elapsed: "00:00:00",
-            fail: 3,
+            elapsed: "00:00:03",
+            fail: 4,
             label: "All Tests",
             pass: 3,
             skip: 0,
@@ -12443,8 +12300,8 @@
         [],
         [
           {
-            elapsed: "00:00:00",
-            fail: 3,
+            elapsed: "00:00:03",
+            fail: 4,
             id: "s1",
             label: "Minimal Suite",
             name: "Minimal Suite",
@@ -12458,10 +12315,10 @@
       window.output["errors"] = [];
     </script>
     <script type="text/javascript">
-      window.output["baseMillis"] = 1754223556228;
+      window.output["baseMillis"] = 1754224641936;
     </script>
     <script type="text/javascript">
-      window.output["generated"] = 482;
+      window.output["generated"] = 3113;
     </script>
     <script type="text/javascript">
       window.output["expand_keywords"] = null;
@@ -12478,7 +12335,6 @@
     </script>
     <title></title>
   </head>
-
   <body data-theme="dark">
     <div id="javascript-disabled">
       <h1>Opening Robot Framework log failed</h1>

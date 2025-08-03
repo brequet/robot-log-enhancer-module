@@ -1,4 +1,5 @@
 import "$lib/components/custom/robot-footer.svelte";
+import overrideScript from "$lib/overrides/robot-expand-recursively-override.js?raw";
 
 function initializeRobotFooter(): void {
   if (document.querySelector("robot-footer")) {
@@ -6,12 +7,22 @@ function initializeRobotFooter(): void {
   }
 
   const footer = document.createElement("robot-footer");
-  const body = document.querySelector("body");
 
-  if (body) {
-    body.appendChild(footer);
-    body.style.paddingBottom = "90vh";
-  }
+  document.body.appendChild(footer);
+  document.body.style.paddingBottom = "90vh";
 }
 
-initializeRobotFooter();
+function injectScript(scriptContent: string): void {
+  const scriptElement = document.createElement("script");
+  scriptElement.type = "text/javascript";
+  scriptElement.textContent = scriptContent;
+
+  document.body.appendChild(scriptElement);
+}
+
+function initializeApp(): void {
+  initializeRobotFooter();
+  injectScript(overrideScript);
+}
+
+initializeApp();
