@@ -1,25 +1,24 @@
-// src/lib/hooks/use-robot-data.svelte.ts
-
 import {
   getFailedTestElements,
   getNumberOfFailedTestsFromPage,
   parseTestFromElement,
   scrollToTest,
 } from "$lib/core/robot/dom";
-import type { RobotTest } from "$lib/core/robot/types";
+import type { RobotState, RobotTest } from "$lib/core/robot/types";
 import { onMount } from "svelte";
 import { scrollY } from "svelte/reactivity/window";
 
-export function useRobotData() {
+export function createRobotState(): RobotState {
   let failedTests = $state<RobotTest[]>([]);
   let totalFailedTestCount = $state(0);
-  let currentTestId: string | null = $state("");
+  let currentTestId: string | null = $state(null);
 
-  let _failedTestElements: HTMLElement[] = [];
+  let failedTestElements: HTMLElement[] = [];
 
   const currentTestIndex = $derived(
     failedTests.findIndex((test) => test.id === currentTestId),
   );
+  const currentTest = $derived(failedTests[currentTestIndex]);
 
   const isPageLoaded = $derived(
     failedTests.length > 0 && failedTests.length === totalFailedTestCount,
@@ -29,7 +28,7 @@ export function useRobotData() {
     const y = scrollY.current;
     if (!y) return;
 
-    _failedTestElements.forEach((el, index) => {
+    failedTestElements.forEach((el, index) => {
       const { offsetTop, offsetHeight } = el;
       if (index === 0 && y < offsetTop) {
         currentTestId = null;
@@ -43,12 +42,12 @@ export function useRobotData() {
 
   onMount(() => {
     const handleDomChanges = () => {
-      _failedTestElements = getFailedTestElements();
-      failedTests = _failedTestElements.map(parseTestFromElement);
+      failedTestElements = getFailedTestElements();
+      failedTests = failedTestElements.map(parseTestFromElement);
       totalFailedTestCount = getNumberOfFailedTestsFromPage();
     };
 
-    handleDomChanges();
+    handleDomChanges(); // Initial run
 
     const observer = new MutationObserver(handleDomChanges);
     observer.observe(document.body, { childList: true, subtree: true });
@@ -58,14 +57,14 @@ export function useRobotData() {
 
   function goToPreviousTest() {
     if (currentTestIndex > 0) {
-      const previousElement = _failedTestElements[currentTestIndex - 1];
+      const previousElement = failedTestElements[currentTestIndex - 1];
       scrollToTest(previousElement);
     }
   }
 
   function goToNextTest() {
     if (currentTestIndex < failedTests.length - 1) {
-      const nextElement = _failedTestElements[currentTestIndex + 1];
+      const nextElement = failedTestElements[currentTestIndex + 1];
       scrollToTest(nextElement);
     }
   }
@@ -75,7 +74,7 @@ export function useRobotData() {
       return failedTests;
     },
     get currentTest() {
-      return failedTests[currentTestIndex];
+      return currentTest;
     },
     get currentTestIndex() {
       return currentTestIndex;

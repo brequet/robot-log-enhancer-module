@@ -1,7 +1,14 @@
 /*
- * This file will be injected at the bottom of the page, so it will override any defined functions in the original robot script.
+ * This file will be injected at the bottom of the page,
+ * so it will override any defined functions in the original robot script.
  */
 
+/**
+ * Override of the robot's expandRecursively function.
+ * With this override, we forcefully keep close any failed "Wait Until Keyword Succeeds"
+ * children keywords, except the last one.
+ * This is to prevent the expansion of all keywords which can lead to a very long list of keywords.
+ */
 function expandRecursively() {
   if (!window.elementsToExpand.length) return;
   var element = window.elementsToExpand.pop();

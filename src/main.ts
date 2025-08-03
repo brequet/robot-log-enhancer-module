@@ -1,5 +1,5 @@
 import "$lib/components/custom/robot-footer.svelte";
-import overrideScript from "$lib/overrides/robot-expand-recursively-override.js?raw";
+import robotExpandRecursivelyScript from "$lib/overrides/robot-expand-recursively.js?raw";
 
 function initializeRobotFooter(): void {
   if (document.querySelector("robot-footer")) {
@@ -22,7 +22,7 @@ function injectScript(scriptContent: string): void {
 
 function initializeApp(): void {
   initializeRobotFooter();
-  injectScript(overrideScript);
+  injectScript(robotExpandRecursivelyScript);
 }
 
 initializeApp();
