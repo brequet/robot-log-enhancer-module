@@ -1,13 +1,10 @@
-<svelte:options
-  customElement={{
-    tag: "robot-footer-module",
-  }}
-/>
+<!-- Robot Footer module, to be injected once in the robot log.html page to provide the footer and associated content -->
+<svelte:options customElement="robot-footer-module" />
 
 <script lang="ts">
   import { createRobotState } from "$lib/state/robot.svelte";
   import { injectFixedStyleForShadowDOM } from "$lib/styles/tw-style-injection";
-  import Footer from "../footer.svelte";
+  import Footer from "../robot-footer/footer.svelte";
 
   const componentHost = $host();
   injectFixedStyleForShadowDOM(componentHost);

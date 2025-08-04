@@ -3,7 +3,7 @@
   import * as Dialog from "$lib/components/ui/dialog";
   import type { RobotTest } from "$lib/core/types";
   import { Dialog as DialogPrimitive } from "bits-ui";
-  import CopyToClipboardButton from "./copy-to-clipboard-button.svelte";
+  import CopyToClipboardButton from "$lib/components/shared/copy-to-clipboard-button.svelte";
 
   let {
     failedTests,

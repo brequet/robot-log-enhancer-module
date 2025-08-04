@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { RobotState } from "$lib/core/types";
-  import FailingTestsDialogTrigger from "./failing-tests-dialog-trigger.svelte";
-  import TestsNavigation from "./tests-navigation.svelte";
+  import FailingTestsDialogTrigger from "$lib/components/robot-footer/failing-tests-dialog-trigger.svelte";
+  import TestsNavigation from "$lib/components/robot-footer/tests-navigation.svelte";
 
   let {
     state,
