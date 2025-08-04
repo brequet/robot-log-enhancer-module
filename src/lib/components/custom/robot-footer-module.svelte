@@ -6,8 +6,7 @@
   import { injectFixedStyleForShadowDOM } from "$lib/styles/tw-style-injection";
   import Footer from "../robot-footer/footer.svelte";
 
-  const componentHost = $host();
-  injectFixedStyleForShadowDOM(componentHost);
+  injectFixedStyleForShadowDOM($host());
 
   const robotData = createRobotState();
 

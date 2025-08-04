@@ -1,9 +1,9 @@
 <script lang="ts">
+  import CopyToClipboardButton from "$lib/components/shared/copy-to-clipboard-button.svelte";
   import { buttonVariants } from "$lib/components/ui/button/index.js";
   import * as Dialog from "$lib/components/ui/dialog";
   import type { RobotTest } from "$lib/core/types";
   import { Dialog as DialogPrimitive } from "bits-ui";
-  import CopyToClipboardButton from "$lib/components/shared/copy-to-clipboard-button.svelte";
 
   let {
     failedTests,
@@ -15,7 +15,7 @@
 
   let failingTestsAsRobotParams = $derived(
     failedTests
-      .map((e: RobotTest) => `--test "${e.name}"`)
+      .map((robotTest: RobotTest) => `--test "${robotTest.name}"`)
       .join(" ")
       .trim(),
   );

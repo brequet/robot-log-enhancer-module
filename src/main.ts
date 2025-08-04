@@ -1,5 +1,7 @@
+import "$lib/components/custom/rest-request-to-curl-module.svelte";
 import "$lib/components/custom/robot-footer-module.svelte";
 import robotExpandRecursivelyScript from "$lib/overrides/robot-expand-recursively.js?raw";
+import robotPopulateChildrenScript from "$lib/overrides/robot-populate-children?raw";
 
 function initializeRobotFooter(): void {
   if (document.querySelector("robot-footer")) {
@@ -23,6 +25,7 @@ function injectScript(scriptContent: string): void {
 function initializeApp(): void {
   initializeRobotFooter();
   injectScript(robotExpandRecursivelyScript);
+  injectScript(robotPopulateChildrenScript);
 }
 
 initializeApp();

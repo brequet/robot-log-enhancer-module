@@ -23,6 +23,7 @@ function expandRecursively() {
     if (element.name === "Wait Until Keyword Succeeds" && children.length > 1) {
       children = children.slice(-2);
     }
+    // End of added part
     for (var i = children.length - 1; i >= 0; i--) {
       var child = children[i];
       if (child.type != "message" && window.expandDecider(child))
