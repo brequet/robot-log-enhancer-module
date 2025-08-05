@@ -1,4 +1,4 @@
-import type { RobotTest } from "./types";
+import type { RobotTest } from "../types";
 
 /**
  * Finds all failed test elements on the page.

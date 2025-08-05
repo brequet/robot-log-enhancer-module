@@ -2,19 +2,26 @@
 <svelte:options customElement="robot-footer-module" />
 
 <script lang="ts">
-  import { createRobotState } from "$lib/state/robot.svelte";
+  import { createRobotStore } from "$lib/state/robot.store.svelte";
   import { injectFixedStyleForShadowDOM } from "$lib/styles/tw-style-injection";
+  import { setContext } from "svelte";
   import Footer from "../robot-footer/footer.svelte";
 
   injectFixedStyleForShadowDOM($host());
 
-  const robotData = createRobotState();
+  const robotStore = createRobotStore();
 
-  let robotFooterModuleContainer: HTMLElement | null = $state(null);
+  let dialogContainer: HTMLElement | null = $state(null); // TODO use context
+
+  setContext("robot-store", robotStore);
+
+  $effect(() => {
+    setContext("dialog-container", dialogContainer);
+  });
 </script>
 
-<div bind:this={robotFooterModuleContainer}></div>
+<div bind:this={dialogContainer}></div>
 
-{#if robotFooterModuleContainer != null}
-  <Footer state={robotData} moduleContainer={robotFooterModuleContainer} />
+{#if dialogContainer != null}
+  <Footer {robotStore} {dialogContainer} />
 {/if}

@@ -3,18 +3,18 @@
   import type { RobotState } from "$lib/core/types";
   import { ArrowLeft, ArrowRight } from "lucide-svelte";
 
-  let { state }: { state: RobotState } = $props();
+  let { robotStore }: { robotStore: RobotState } = $props();
 
-  let isPreviousTestAvailable = $derived(state.currentTestIndex > 0);
+  let isPreviousTestAvailable = $derived(robotStore.currentTestIndex > 0);
   let isNextTestAvailable = $derived(
-    state.currentTestIndex < state.failedTests.length - 1,
+    robotStore.currentTestIndex < robotStore.failedTests.length - 1,
   );
 
   function handleKeydown(event: KeyboardEvent) {
     if (event.key === "ArrowLeft") {
-      state.goToPreviousTest();
+      robotStore.goToPreviousTest();
     } else if (event.key === "ArrowRight") {
-      state.goToNextTest();
+      robotStore.goToNextTest();
     }
   }
 </script>
@@ -24,24 +24,24 @@
 <span
   class="flex-grow overflow-hidden text-ellipsis whitespace-nowrap pl-4 text-left"
 >
-  {#if state.failedTests.length > 0}
+  {#if robotStore.failedTests.length > 0}
     <span class="mr-1 font-bold">
-      [{state.currentTestIndex + 1} / {state.failedTests.length}]
+      [{robotStore.currentTestIndex + 1} / {robotStore.failedTests.length}]
     </span>
   {/if}
 
-  {#if state.currentTest}
-    {state.currentTest.name}
+  {#if robotStore.currentTest}
+    {robotStore.currentTest.name}
   {/if}
 
-  {#if state.isLoading}
+  {#if robotStore.isLoading}
     <span class="ml-2 animate-pulse">(Loading...)</span>
   {/if}
 </span>
 
 <div class="flex gap-2">
   <Button
-    onclick={state.goToPreviousTest}
+    onclick={robotStore.goToPreviousTest}
     disabled={!isPreviousTestAvailable}
     variant="outline"
     size="icon"
@@ -50,7 +50,7 @@
     <ArrowLeft class="h-4 w-4" />
   </Button>
   <Button
-    onclick={state.goToNextTest}
+    onclick={robotStore.goToNextTest}
     disabled={!isNextTestAvailable}
     variant="outline"
     size="icon"

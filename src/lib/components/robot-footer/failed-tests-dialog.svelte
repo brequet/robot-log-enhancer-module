@@ -3,16 +3,16 @@
   import { buttonVariants } from "$lib/components/ui/button/index.js";
   import * as Dialog from "$lib/components/ui/dialog";
   import type { RobotTest } from "$lib/core/types";
-  import { Dialog as DialogPrimitive } from "bits-ui";
 
   let {
     failedTests,
-    portalProps,
+    dialogContainer,
   }: {
     failedTests: RobotTest[];
-    portalProps: DialogPrimitive.PortalProps;
+    dialogContainer: HTMLElement;
   } = $props();
 
+  // TODO: probably move this to a utility function
   let failingTestsAsRobotParams = $derived(
     failedTests
       .map((robotTest: RobotTest) => `--test "${robotTest.name}"`)
@@ -25,7 +25,7 @@
   <Dialog.Trigger class={buttonVariants({ variant: "default" })}>
     Print all failing tests as robot test params in console
   </Dialog.Trigger>
-  <Dialog.Content class="sm:max-w-4xl" {portalProps}>
+  <Dialog.Content class="sm:max-w-4xl" portalProps={{ to: dialogContainer }}>
     <Dialog.Header>
       <Dialog.Title>Failing tests as Robot params</Dialog.Title>
       <Dialog.Description>

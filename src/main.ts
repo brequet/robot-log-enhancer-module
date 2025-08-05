@@ -1,5 +1,7 @@
+// Imports for custom elements so they are registered and available globally
 import "$lib/components/custom/rest-request-to-curl-module.svelte";
 import "$lib/components/custom/robot-footer-module.svelte";
+
 import robotExpandRecursivelyScript from "$lib/overrides/robot-expand-recursively.js?raw";
 import robotPopulateChildrenScript from "$lib/overrides/robot-populate-children?raw";
 

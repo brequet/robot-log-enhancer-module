@@ -30,7 +30,7 @@ function populateChildren(elementId, childElement, childrenNames) {
             "rest-request-to-curl-module",
           );
           restRequestToCurlElement.setAttribute(
-            "restRequestRequestDataText",
+            "requestDataText",
             restRequestRequestDataText,
           );
           restRequestRequestDataElement?.appendChild(restRequestToCurlElement);

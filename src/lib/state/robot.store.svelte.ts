@@ -1,58 +1,61 @@
 import {
-  getFailedTestElements,
   getTotalFailedTestCount,
   parseTestFromElement,
   scrollToTest,
-} from "$lib/core/robot-dom.service";
+} from "$lib/core/services/robot-dom.service";
+import { createFailedTestObserver } from "$lib/core/services/robot-observer.service";
 import type { RobotState, RobotTest } from "$lib/core/types";
 import { onMount } from "svelte";
 import { scrollY } from "svelte/reactivity/window";
 
-export function createRobotState(): RobotState {
+/**
+ * A composable function that creates and manages the reactive state for the Robot Log Enhancer.
+ * This must be called during a component's initialization.
+ */
+export function createRobotStore(): RobotState {
+  let failedTestElements: HTMLElement[] = [];
   let failedTests = $state<RobotTest[]>([]);
   let totalFailedTestCount = $state(0);
-  let currentTestId: string | null = $state(null);
-
-  let failedTestElements: HTMLElement[] = [];
+  let currentTestId = $state<string | null>(null);
 
   const currentTestIndex = $derived(
     failedTests.findIndex((test) => test.id === currentTestId),
   );
-  const currentTest = $derived(failedTests[currentTestIndex]);
+
+  const currentTest = $derived(failedTests[currentTestIndex] ?? null);
 
   const isLoading = $derived(
     failedTests.length === 0 || failedTests.length !== totalFailedTestCount,
   );
 
+  // This $effect is correctly scoped because createRobotStore() is called
+  // during component initialization. It tracks the current test on scroll.
   $effect(() => {
     const y = scrollY.current;
-    if (!y) return;
+    if (isLoading || !y) return;
 
-    failedTestElements.forEach((el, index) => {
+    for (const el of failedTestElements) {
       const { offsetTop, offsetHeight } = el;
-      if (index === 0 && y < offsetTop) {
-        currentTestId = null;
-      } else if (y >= offsetTop && y < offsetTop + offsetHeight) {
+      if (y >= offsetTop && y < offsetTop + offsetHeight) {
         if (currentTestId !== el.id) {
           currentTestId = el.id;
         }
+        // Exit early once the current test is found
+        return;
       }
-    });
+    }
   });
 
+  // onMount sets up the DOM observer and its cleanup.
   onMount(() => {
-    const handleDomChanges = () => {
-      failedTestElements = getFailedTestElements();
-      failedTests = failedTestElements.map(parseTestFromElement);
+    const cleanupObserver = createFailedTestObserver((elements) => {
+      failedTestElements = elements;
+      failedTests = elements.map(parseTestFromElement);
       totalFailedTestCount = getTotalFailedTestCount();
-    };
+    });
 
-    handleDomChanges(); // Initial run
-
-    const observer = new MutationObserver(handleDomChanges);
-    observer.observe(document.body, { childList: true, subtree: true });
-
-    return () => observer.disconnect();
+    // The observer is disconnected when the component is destroyed.
+    return () => cleanupObserver();
   });
 
   function goToPreviousTest() {
@@ -69,6 +72,7 @@ export function createRobotState(): RobotState {
     }
   }
 
+  // Return the reactive API for the component to use.
   return {
     get failedTests() {
       return failedTests;
