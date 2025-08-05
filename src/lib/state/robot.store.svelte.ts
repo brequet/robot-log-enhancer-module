@@ -28,8 +28,6 @@ export function createRobotStore(): RobotState {
     failedTests.length === 0 || failedTests.length !== totalFailedTestCount,
   );
 
-  // This $effect is correctly scoped because createRobotStore() is called
-  // during component initialization. It tracks the current test on scroll.
   $effect(() => {
     const y = scrollY.current;
     if (isLoading || !y) return;
@@ -46,7 +44,6 @@ export function createRobotStore(): RobotState {
     }
   });
 
-  // onMount sets up the DOM observer and its cleanup.
   onMount(() => {
     const cleanupObserver = createFailedTestObserver((elements) => {
       failedTestElements = elements;
@@ -54,7 +51,6 @@ export function createRobotStore(): RobotState {
       totalFailedTestCount = getTotalFailedTestCount();
     });
 
-    // The observer is disconnected when the component is destroyed.
     return () => cleanupObserver();
   });
 
@@ -72,7 +68,6 @@ export function createRobotStore(): RobotState {
     }
   }
 
-  // Return the reactive API for the component to use.
   return {
     get failedTests() {
       return failedTests;

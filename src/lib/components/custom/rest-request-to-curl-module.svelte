@@ -14,36 +14,35 @@
 
   injectFixedStyleForShadowDOM($host());
 
-  let restRequestToCurlDialogContainer: HTMLElement | null = $state(null);
+  let dialogContainer: HTMLElement | null = $state(null);
 
   const curlRequest = $derived(convertToPowerShellCurl(requestDataText));
 </script>
 
-<div bind:this={restRequestToCurlDialogContainer} class="h-0"></div>
+<div class="mb-4 flex flex-col items-start">
+  <div bind:this={dialogContainer} class="h-0"></div>
 
-<Dialog.Root>
-  <Dialog.Trigger
-    class={cn(buttonVariants({ variant: "outline" }), "mb-4 w-full")}
-  >
-    <Terminal class="mr-2 h-4 w-4" />
-    Copy as CURL request
-  </Dialog.Trigger>
-  <Dialog.Content
-    class="sm:max-w-4xl"
-    portalProps={{ to: restRequestToCurlDialogContainer }}
-  >
-    <Dialog.Header>
-      <Dialog.Title>Copy as CURL request</Dialog.Title>
-      <Dialog.Description>
-        Translation of the REST request to be used in a terminal
-      </Dialog.Description>
-    </Dialog.Header>
-    <div class="flex flex-col items-end">
-      <CopyToClipboardButton text={curlRequest} />
-      <div class="bg-muted text-muted-foreground mt-1 w-full rounded-lg p-4">
-        <pre
-          class="w-full whitespace-pre-wrap break-all font-mono">{curlRequest}</pre>
+  <Dialog.Root>
+    <Dialog.Trigger
+      class={cn(buttonVariants({ variant: "outline" }), "w-full")}
+    >
+      <Terminal class="mr-2 h-4 w-4" />
+      Copy as CURL request
+    </Dialog.Trigger>
+    <Dialog.Content class="sm:max-w-4xl" portalProps={{ to: dialogContainer }}>
+      <Dialog.Header>
+        <Dialog.Title>Copy as CURL request</Dialog.Title>
+        <Dialog.Description>
+          Translation of the REST request to be used in a terminal
+        </Dialog.Description>
+      </Dialog.Header>
+      <div class="flex flex-col items-end">
+        <CopyToClipboardButton text={curlRequest} />
+        <div class="bg-muted text-muted-foreground mt-1 w-full rounded-lg p-4">
+          <pre
+            class="w-full whitespace-pre-wrap break-all font-mono">{curlRequest}</pre>
+        </div>
       </div>
-    </div>
-  </Dialog.Content>
-</Dialog.Root>
+    </Dialog.Content>
+  </Dialog.Root>
+</div>

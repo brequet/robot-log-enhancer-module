@@ -30,8 +30,8 @@
   });
 </script>
 
+<!--On HTTP, cannot copy directly into user clipboard -->
 {#if navigator.clipboard}
-  <!--On HTTP, cannot copy directly into user clipboard -->
   <Button onclick={copyToClipboard} variant="outline" size="icon">
     {#if copied}
       <ClipboardCheck class="h-4 w-4" />

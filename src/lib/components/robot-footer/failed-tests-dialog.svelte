@@ -2,6 +2,7 @@
   import CopyToClipboardButton from "$lib/components/shared/copy-to-clipboard-button.svelte";
   import { buttonVariants } from "$lib/components/ui/button/index.js";
   import * as Dialog from "$lib/components/ui/dialog";
+  import { formatTestsAsRobotParams } from "$lib/core/services/failed-tests-reporter.service";
   import type { RobotTest } from "$lib/core/types";
 
   let {
@@ -12,12 +13,8 @@
     dialogContainer: HTMLElement;
   } = $props();
 
-  // TODO: probably move this to a utility function
   let failingTestsAsRobotParams = $derived(
-    failedTests
-      .map((robotTest: RobotTest) => `--test "${robotTest.name}"`)
-      .join(" ")
-      .trim(),
+    formatTestsAsRobotParams(failedTests),
   );
 </script>
 

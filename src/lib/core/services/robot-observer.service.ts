@@ -18,7 +18,6 @@ export function createFailedTestObserver(
   const observer = new MutationObserver(handleDomChanges);
   observer.observe(document.body, { childList: true, subtree: true });
 
-  // Return a cleanup function
   return () => {
     observer.disconnect();
   };
