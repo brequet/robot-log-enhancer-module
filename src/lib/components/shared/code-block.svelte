@@ -36,7 +36,7 @@
   <!-- Code Area -->
   <div class="relative flex-1">
     <pre
-      class="absolute inset-0 w-full whitespace-pre-wrap break-all p-4 font-mono overflow-y-auto"
+      class="absolute inset-0 w-full whitespace-pre-wrap break-all rounded-b-lg bg-primary p-4 font-mono text-primary-foreground overflow-y-auto"
     >{selectedSnippet.text}</pre>
   </div>
 </div>

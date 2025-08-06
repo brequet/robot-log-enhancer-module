@@ -5,7 +5,7 @@
 </script>
 
 <footer
-  class="bg-background text-primary fixed bottom-0 left-0 right-0 z-50 flex h-16 w-full items-center border-t px-4"
+  class="bg-background text-primary fixed bottom-0 left-0 right-0 z-50 flex h-14 w-full items-center border-t px-4"
 >
   <FailedTestDialog failedTests={robotStore.failedTests} />
 

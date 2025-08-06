@@ -17,6 +17,8 @@
   let dialogContainer: HTMLElement | null = $state(null);
 
   const curlRequestSnippets = $derived(generateCurlCommands(requestDataText));
+
+  // TODO must split this, make it more modular more clean
 </script>
 
 <div class="mb-4 flex flex-col items-start">
