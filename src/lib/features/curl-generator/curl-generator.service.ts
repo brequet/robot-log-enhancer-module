@@ -1,4 +1,4 @@
-import type { CodeSnippet, RestRequestData } from "../types";
+import type { CodeSnippet, RestRequestData } from "./curl-generator.types";
 
 const PARSER_REGEX = {
   URL: /url=(https?:\/\/\S+)/,
@@ -43,8 +43,8 @@ function parseRestRequest(text: string): RestRequestData | null {
 
       headers = Object.fromEntries(
         Object.entries(allHeaders).filter(
-          ([key]) => !HEADERS_TO_IGNORE.has(key)
-        ) as Array<[string, string]>
+          ([key]) => !HEADERS_TO_IGNORE.has(key),
+        ) as Array<[string, string]>,
       );
     }
 
@@ -120,14 +120,12 @@ function convertToPowerShell5(data: RestRequestData): string {
  * @returns A string containing the Windows CMD command.
  */
 function convertToCmd(data: RestRequestData): string {
-  const commandParts: string[] = [
-    `curl -X ${data.method}`,
-    `"${data.url}"`,
-  ];
+  const commandParts: string[] = [`curl -X ${data.method}`, `"${data.url}"`];
 
   if (Object.keys(data.headers).length > 0) {
-    const headerParts = Object.entries(data.headers)
-      .map(([key, value]) => `-H "${key}: ${value}"`);
+    const headerParts = Object.entries(data.headers).map(
+      ([key, value]) => `-H "${key}: ${value}"`,
+    );
     commandParts.push(...headerParts);
   }
 
@@ -159,7 +157,12 @@ export function generateCurlCommands(text: string): CodeSnippet[] {
   const data = parseRestRequest(text);
 
   if (!data) {
-    return [{ fileType: "Error", text: "Could not parse request data. Check console for details." }];
+    return [
+      {
+        fileType: "Error",
+        text: "Could not parse request data. Check console for details.",
+      },
+    ];
   }
 
   return CONVERTERS.map(({ fileType, generate }) => ({

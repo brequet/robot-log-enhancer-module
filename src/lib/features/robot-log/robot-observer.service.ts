@@ -1,4 +1,4 @@
-import { getFailedTestElements } from "$lib/core/services/robot-dom.service";
+import { getFailedTestElements } from "./robot-dom.service";
 
 /**
  * Observes the DOM for changes and calls the provided callback with the current list of failed test elements.

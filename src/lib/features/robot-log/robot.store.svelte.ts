@@ -1,11 +1,11 @@
 import {
   getTotalFailedTestCount,
   parseTestFromElement,
-  scrollToTest
-} from '$lib/core/services/robot-dom.service';
-import { createFailedTestObserver } from '$lib/core/services/robot-observer.service';
-import type { RobotState, RobotTest } from '$lib/core/types';
-import { scrollY } from 'svelte/reactivity/window';
+  scrollToTest,
+} from "./robot-dom.service";
+import { createFailedTestObserver } from "./robot-observer.service";
+import type { RobotState, RobotTest } from "./robot.types";
+import { scrollY } from "svelte/reactivity/window";
 
 export class RobotStore implements RobotState {
   #failedTestElements: HTMLElement[] = [];
@@ -14,11 +14,14 @@ export class RobotStore implements RobotState {
   #currentTestId = $state<string | null>(null);
 
   readonly #currentTestIndex = $derived(
-    this.#failedTests.findIndex((test) => test.id === this.#currentTestId)
+    this.#failedTests.findIndex((test) => test.id === this.#currentTestId),
   );
-  readonly #currentTest = $derived(this.#failedTests[this.#currentTestIndex] ?? null);
+  readonly #currentTest = $derived(
+    this.#failedTests[this.#currentTestIndex] ?? null,
+  );
   readonly #isLoading = $derived(
-    this.#failedTests.length === 0 || this.#failedTests.length !== this.#totalFailedTestCount
+    this.#failedTests.length === 0 ||
+      this.#failedTests.length !== this.#totalFailedTestCount,
   );
 
   /**
@@ -77,7 +80,8 @@ export class RobotStore implements RobotState {
   // Public methods to navigate between failed tests.
   goToPreviousTest = (): void => {
     if (this.currentTestIndex > 0) {
-      const previousElement = this.#failedTestElements[this.currentTestIndex - 1];
+      const previousElement =
+        this.#failedTestElements[this.currentTestIndex - 1];
       scrollToTest(previousElement);
     }
   };

@@ -1,9 +1,13 @@
 <script lang="ts">
-  import type { CodeSnippet } from "$lib/core/types";
-  import CopyToClipboardButton from "./copy-to-clipboard-button.svelte";
+  import { CopyToClipboardButton } from "../copy-to-clipboard-button";
   import { Button } from "$lib/components/ui/button";
+  import type { CodeSnippet } from "$lib/features/curl-generator/curl-generator.types";
 
-  let { snippets }: { snippets: CodeSnippet[] } = $props();
+  type Props = {
+    snippets: CodeSnippet[]
+  };
+
+  let { snippets }: Props = $props();
 
   let selectedIndex = $state(0);
   const selectedSnippet = $derived(snippets[selectedIndex]);

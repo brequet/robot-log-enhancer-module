@@ -1,23 +1,24 @@
 <script lang="ts">
   import { buttonVariants } from "$lib/components/ui/button/index.js";
   import * as Dialog from "$lib/components/ui/dialog";
-  import { formatTestsAsRobotParams } from "$lib/core/services/failed-tests-reporter.service";
-  import type { CodeSnippet, RobotTest } from "$lib/core/types";
+  import { formatTestsAsRobotParams } from "$lib/features/failed-test-reporter/failed-tests-reporter.service";
   import { getContext } from "svelte";
-  import { CONTEXT_KEY_DIALOG_CONTAINER } from "$lib/core/contants";
-  import CodeBlock from "$lib/components/shared/code-block.svelte";
+  import { CodeBlock } from "$lib/components/shared/code-block";
+  import { CONTEXT_KEY_DIALOG_CONTAINER } from "$lib/core/constants";
+  import type { RobotTest } from "$lib/features/robot-log/robot.types";
+  import type { CodeSnippet } from "$lib/features/curl-generator/curl-generator.types";
 
-  let {
-    failedTests,
-  }: {
+  type Props = {
     failedTests: RobotTest[];
-  } = $props();
+  }
 
-  const dialogContainer: () => HTMLElement = getContext(CONTEXT_KEY_DIALOG_CONTAINER)
+  let { failedTests }: Props = $props();
+
+  const dialogContainer: () => HTMLElement = getContext(CONTEXT_KEY_DIALOG_CONTAINER);
 
   const failingTestsSnippets: CodeSnippet[] = $derived.by(() => {
     const params = formatTestsAsRobotParams(failedTests);
-    return [{ fileType: 'Shell', text: params }];
+    return [{ fileType: "Shell", text: params }];
   });
 </script>
 

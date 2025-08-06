@@ -3,12 +3,12 @@
 
 <script lang="ts">
   import * as Dialog from "$lib/components/ui/dialog";
-  import { generateCurlCommands } from "$lib/core/services/curl-generator.service";
-  import { injectTailwindStyleForShadowDOM } from "$lib/styles/tw-style-injection";
+  import { generateCurlCommands } from "$lib/features/curl-generator/curl-generator.service";
+  import { injectTailwindStyleForShadowDOM } from "$lib/styles/tailwind-style-injection";
   import { cn } from "$lib/utils";
   import { Terminal } from "lucide-svelte";
   import { buttonVariants } from "../ui/button";
-  import CodeBlock from "$lib/components/shared/code-block.svelte";
+  import { CodeBlock } from "$lib/components/shared/code-block";
 
   let { requestDataText }: { requestDataText: string } = $props();
 

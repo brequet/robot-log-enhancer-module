@@ -1,4 +1,4 @@
-import twStyleSheet from "./tw.css?inline";
+import tailwindStyleSheet from "./tailwind.css?inline";
 
 /**
  * Since Tailwind v4, Tailwind CSS uses `@property` to define custom properties.
@@ -11,7 +11,7 @@ import twStyleSheet from "./tw.css?inline";
  */
 export function injectTailwindStyleForShadowDOM(host: HTMLElement) {
   const style = document.createElement("style");
-  style.textContent = fixTailwindForShadowDOM(twStyleSheet);
+  style.textContent = fixTailwindForShadowDOM(tailwindStyleSheet);
   if (!host.shadowRoot) {
     throw new Error("Host element does not have a shadow root.");
   }

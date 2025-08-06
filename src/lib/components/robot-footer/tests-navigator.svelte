@@ -1,11 +1,11 @@
 <script lang="ts">
   import { Button } from "$lib/components/ui/button";
   import { ArrowLeft, ArrowRight } from "lucide-svelte";
-  import { robotStore } from "$lib/store/robot.store.svelte";
+  import { robotStore } from "$lib/features/robot-log/robot.store.svelte.js";
 
   let isPreviousTestAvailable = $derived(robotStore.currentTestIndex > 0);
   let isNextTestAvailable = $derived(
-    robotStore.currentTestIndex < robotStore.failedTests.length - 1,
+    robotStore.currentTestIndex < robotStore.failedTests.length - 1
   );
 
   function handleKeydown(event: KeyboardEvent) {

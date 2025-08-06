@@ -1,7 +1,7 @@
 <script lang="ts">
   import FailedTestDialog from "$lib/components/robot-footer/failed-tests-dialog.svelte";
   import TestNavigator from "$lib/components/robot-footer/tests-navigator.svelte";
-  import { robotStore } from "$lib/store/robot.store.svelte";
+  import { robotStore } from "$lib/features/robot-log/robot.store.svelte.js";
 </script>
 
 <footer
