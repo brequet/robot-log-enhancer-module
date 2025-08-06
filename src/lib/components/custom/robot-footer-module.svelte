@@ -9,8 +9,7 @@
   import { onMount, setContext } from "svelte";
   import Footer from "../robot-footer/footer.svelte";
 
-  const host = $host();
-  injectTailwindStyleForShadowDOM(host);
+  injectTailwindStyleForShadowDOM($host());
 
   let dialogContainer: HTMLElement | null = $state(null);
 

@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { CopyToClipboardButton } from "../copy-to-clipboard-button";
   import { Button } from "$lib/components/ui/button";
   import type { CodeSnippet } from "$lib/features/curl-generator/curl-generator.types";
+  import { CopyToClipboardButton } from "../copy-to-clipboard-button";
 
   type Props = {
     snippets: CodeSnippet[];
