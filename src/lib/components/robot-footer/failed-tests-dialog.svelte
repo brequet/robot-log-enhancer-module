@@ -1,11 +1,11 @@
 <script lang="ts">
-  import CopyToClipboardButton from "$lib/components/shared/copy-to-clipboard-button.svelte";
   import { buttonVariants } from "$lib/components/ui/button/index.js";
   import * as Dialog from "$lib/components/ui/dialog";
   import { formatTestsAsRobotParams } from "$lib/core/services/failed-tests-reporter.service";
-  import type { RobotTest } from "$lib/core/types";
+  import type { CodeSnippet, RobotTest } from "$lib/core/types";
   import { getContext } from "svelte";
   import { CONTEXT_KEY_DIALOG_CONTAINER } from "$lib/core/contants";
+  import CodeBlock from "$lib/components/shared/code-block.svelte";
 
   let {
     failedTests,
@@ -15,16 +15,17 @@
 
   const dialogContainer: () => HTMLElement = getContext(CONTEXT_KEY_DIALOG_CONTAINER)
 
-  let failingTestsAsRobotParams = $derived(
-    formatTestsAsRobotParams(failedTests),
-  );
+  const failingTestsSnippets: CodeSnippet[] = $derived.by(() => {
+    const params = formatTestsAsRobotParams(failedTests);
+    return [{ fileType: 'Shell', text: params }];
+  });
 </script>
 
 <Dialog.Root>
   <Dialog.Trigger class={buttonVariants({ variant: "default" })}>
     Print all failing tests as robot test params in console
   </Dialog.Trigger>
-  <Dialog.Content class="sm:max-w-4xl" portalProps={{ to: dialogContainer() }}>
+  <Dialog.Content class="flex h-full max-h-[80vh] flex-col sm:max-w-4xl" portalProps={{ to: dialogContainer() }}>
     <Dialog.Header>
       <Dialog.Title>Failing tests as Robot params</Dialog.Title>
       <Dialog.Description>
@@ -32,15 +33,6 @@
       </Dialog.Description>
     </Dialog.Header>
 
-    <div class="flex flex-col items-end">
-      <CopyToClipboardButton text={failingTestsAsRobotParams} />
-
-      <div
-        class="bg-muted text-muted-foreground mt-1 max-h-[60vh] w-full overflow-y-auto rounded-lg p-4"
-      >
-        <pre
-          class="w-full whitespace-pre-wrap break-all font-mono">{failingTestsAsRobotParams}</pre>
-      </div>
-    </div>
+    <CodeBlock snippets={failingTestsSnippets} />
   </Dialog.Content>
 </Dialog.Root>

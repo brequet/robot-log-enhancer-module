@@ -1,4 +1,4 @@
-import type { RestRequestData } from "../types";
+import type { CodeSnippet, RestRequestData } from "../types";
 
 function parseRestRequest(text: string): RestRequestData | null {
   try {
@@ -15,6 +15,7 @@ function parseRestRequest(text: string): RestRequestData | null {
         .replace(/'/g, '"')
         .replace(/:\s/g, ": ");
       headers = JSON.parse(headerText);
+    // TODO: remove certain headers like 'Content-Length' or 'Host'
     }
 
     return {
@@ -29,10 +30,7 @@ function parseRestRequest(text: string): RestRequestData | null {
   }
 }
 
-export function convertToPowerShellCurl(text: string): string {
-  const data = parseRestRequest(text);
-  if (!data) return "Error: Could not parse request data.";
-
+function convertToPowerShell7(data: RestRequestData): string {
   let powershellCmd = `Invoke-RestMethod -Method ${data.method} \`\n-Uri '${data.url}'`;
 
   if (Object.keys(data.headers).length > 0) {
@@ -50,6 +48,24 @@ export function convertToPowerShellCurl(text: string): string {
     }
     powershellCmd += ` \`\n-Body '${data.body}'`;
   }
-
+  powershellCmd += powershellCmd + powershellCmd + powershellCmd+ `\n`;
   return powershellCmd;
+}
+
+function convertToCmd(data: RestRequestData): string {
+  // TODO with powershell 5
+  return `REM CMD conversion not yet implemented for ${data.method} ${data.url}`;
+}
+
+
+export function generateCurlCommands(text: string): CodeSnippet[] {
+  const data = parseRestRequest(text);
+  if (!data) {
+    return [{ fileType: 'Error', text: 'Could not parse request data.' }];
+  }
+
+  return [
+    { fileType: 'PowerShell 7', text: convertToPowerShell7(data) },
+    { fileType: 'CMD', text: convertToCmd(data) },
+  ];
 }

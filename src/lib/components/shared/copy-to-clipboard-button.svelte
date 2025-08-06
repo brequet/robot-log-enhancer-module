@@ -1,38 +1,42 @@
 <script lang="ts">
   import { Button } from "$lib/components/ui/button";
   import { Clipboard, ClipboardCheck } from "lucide-svelte";
-  import { onMount } from "svelte";
 
-  let { text }: { text: string } = $props();
+  type Props = {
+    text: string;
+    class?: string;
+  };
+
+  let { text, class: className }: Props = $props();
 
   let copied = $state(false);
 
   function copyToClipboard() {
-    // on http non secured connection, navigator.clipboard API is not available
-    if (!navigator.clipboard || !navigator.clipboard.writeText) return;
-    navigator.clipboard
-      .writeText(text)
-      .then(() => setCopiedState())
-      .catch((err) => console.error("Failed to copy: ", err));
-  }
-
-  function setCopiedState() {
-    copied = true;
-    setTimeout(() => {
-      copied = false;
-    }, 2000);
-  }
-
-  onMount(() => {
-    if (!navigator.clipboard || !navigator.clipboard.writeText) {
+    if (!navigator.clipboard) {
       console.warn("Clipboard API is not available in this environment.");
+      return;
     }
-  });
+
+    navigator.clipboard.writeText(text).then(() => {
+      copied = true;
+      setTimeout(() => {
+        copied = false;
+      }, 2000);
+    }).catch(err => {
+      console.error("Failed to copy text: ", err);
+    });
+  }
 </script>
 
-<!--On HTTP, cannot copy directly into user clipboard -->
-{#if navigator.clipboard}
-  <Button onclick={copyToClipboard} variant="outline" size="icon">
+<!-- Handle environments without clipboard API (e.g., SSR, non-secure origins) -->
+{#if typeof navigator !== 'undefined' && navigator.clipboard}
+  <Button
+    onclick={copyToClipboard}
+    variant="outline"
+    size="icon"
+    class={className}
+    aria-label="Copy to clipboard"
+  >
     {#if copied}
       <ClipboardCheck class="h-4 w-4" />
     {:else}

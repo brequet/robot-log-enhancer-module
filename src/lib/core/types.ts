@@ -19,3 +19,8 @@ export interface RestRequestData {
   headers: Record<string, string>;
   body: string;
 }
+
+export type CodeSnippet = {
+  fileType: string;
+  text: string;
+};

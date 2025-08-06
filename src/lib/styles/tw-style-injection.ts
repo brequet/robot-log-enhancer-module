@@ -9,7 +9,7 @@ import twStyleSheet from "./tw.css?inline";
  *
  * @param host The host element to inject the Tailwind CSS styles into.
  */
-export function injectFixedStyleForShadowDOM(host: HTMLElement) {
+export function injectTailwindStyleForShadowDOM(host: HTMLElement) {
   const style = document.createElement("style");
   style.textContent = fixTailwindForShadowDOM(twStyleSheet);
   if (!host.shadowRoot) {

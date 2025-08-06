@@ -3,20 +3,20 @@
 
 <script lang="ts">
   import * as Dialog from "$lib/components/ui/dialog";
-  import { convertToPowerShellCurl } from "$lib/core/services/curl-generator.service";
-  import { injectFixedStyleForShadowDOM } from "$lib/styles/tw-style-injection";
+  import { generateCurlCommands } from "$lib/core/services/curl-generator.service";
+  import { injectTailwindStyleForShadowDOM } from "$lib/styles/tw-style-injection";
   import { cn } from "$lib/utils";
   import { Terminal } from "lucide-svelte";
-  import CopyToClipboardButton from "../shared/copy-to-clipboard-button.svelte";
   import { buttonVariants } from "../ui/button";
+  import CodeBlock from "$lib/components/shared/code-block.svelte";
 
   let { requestDataText }: { requestDataText: string } = $props();
 
-  injectFixedStyleForShadowDOM($host());
+  injectTailwindStyleForShadowDOM($host());
 
   let dialogContainer: HTMLElement | null = $state(null);
 
-  const curlRequest = $derived(convertToPowerShellCurl(requestDataText));
+  const curlRequestSnippets = $derived(generateCurlCommands(requestDataText));
 </script>
 
 <div class="mb-4 flex flex-col items-start">
@@ -27,22 +27,17 @@
       class={cn(buttonVariants({ variant: "outline" }), "w-full")}
     >
       <Terminal class="mr-2 h-4 w-4" />
-      Copy as CURL request
+      Copy as cURL request
     </Dialog.Trigger>
-    <Dialog.Content class="sm:max-w-4xl" portalProps={{ to: dialogContainer }}>
+    <Dialog.Content class="flex h-full max-h-[80vh] flex-col sm:max-w-4xl" portalProps={{ to: dialogContainer }}>
       <Dialog.Header>
-        <Dialog.Title>Copy as CURL request</Dialog.Title>
+        <Dialog.Title>Copy as cURL request</Dialog.Title>
         <Dialog.Description>
-          Translation of the REST request to be used in a terminal
+          Select your desired format and copy the command.
         </Dialog.Description>
       </Dialog.Header>
-      <div class="flex flex-col items-end">
-        <CopyToClipboardButton text={curlRequest} />
-        <div class="bg-muted text-muted-foreground mt-1 w-full rounded-lg p-4">
-          <pre
-            class="w-full whitespace-pre-wrap break-all font-mono">{curlRequest}</pre>
-        </div>
-      </div>
+
+      <CodeBlock snippets={curlRequestSnippets} />
     </Dialog.Content>
   </Dialog.Root>
 </div>
