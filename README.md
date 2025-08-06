@@ -1,6 +1,6 @@
 TODO completement refaire le readme
-- possibilité de yarn run dev pour dev en live le composant injecté dans le log.html qui est index.html
 
+- possibilité de yarn run dev pour dev en live le composant injecté dans le log.html qui est index.html
 
 # Robot Log Enhancer 🤖
 

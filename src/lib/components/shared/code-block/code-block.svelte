@@ -4,7 +4,7 @@
   import type { CodeSnippet } from "$lib/features/curl-generator/curl-generator.types";
 
   type Props = {
-    snippets: CodeSnippet[]
+    snippets: CodeSnippet[];
   };
 
   let { snippets }: Props = $props();
@@ -17,13 +17,17 @@
   }
 </script>
 
-<div class="flex h-full flex-col rounded-lg border bg-muted text-muted-foreground">
-  <div class="flex flex-shrink-0 items-center gap-2 border-b border-border px-4 py-2">
+<div
+  class="bg-muted text-muted-foreground flex h-full flex-col rounded-lg border"
+>
+  <div
+    class="border-border flex flex-shrink-0 items-center gap-2 border-b px-4 py-2"
+  >
     <!-- Header -->
     <div class="flex items-center gap-2">
       {#each snippets as snippet, index}
         <Button
-          variant={selectedIndex === index ? 'outline' : 'ghost-border'}
+          variant={selectedIndex === index ? "outline" : "ghost-border"}
           size="sm"
           onclick={() => selectSnippet(index)}
         >
@@ -40,7 +44,6 @@
   <!-- Code Area -->
   <div class="relative flex-1">
     <pre
-      class="absolute inset-0 w-full whitespace-pre-wrap break-all rounded-b-lg bg-primary p-4 font-mono text-primary-foreground overflow-y-auto"
-    >{selectedSnippet.text}</pre>
+      class="bg-primary text-primary-foreground absolute inset-0 w-full overflow-y-auto whitespace-pre-wrap break-all rounded-b-lg p-4 font-mono">{selectedSnippet.text}</pre>
   </div>
 </div>

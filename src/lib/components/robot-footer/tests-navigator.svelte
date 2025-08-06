@@ -5,7 +5,7 @@
 
   let isPreviousTestAvailable = $derived(robotStore.currentTestIndex > 0);
   let isNextTestAvailable = $derived(
-    robotStore.currentTestIndex < robotStore.failedTests.length - 1
+    robotStore.currentTestIndex < robotStore.failedTests.length - 1,
   );
 
   function handleKeydown(event: KeyboardEvent) {

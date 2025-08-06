@@ -10,11 +10,13 @@
 
   type Props = {
     failedTests: RobotTest[];
-  }
+  };
 
   let { failedTests }: Props = $props();
 
-  const dialogContainer: () => HTMLElement = getContext(CONTEXT_KEY_DIALOG_CONTAINER);
+  const dialogContainer: () => HTMLElement = getContext(
+    CONTEXT_KEY_DIALOG_CONTAINER,
+  );
 
   const failingTestsSnippets: CodeSnippet[] = $derived.by(() => {
     const params = formatTestsAsRobotParams(failedTests);
@@ -26,7 +28,10 @@
   <Dialog.Trigger class={buttonVariants({ variant: "default" })}>
     Print all failing tests as robot test params in console
   </Dialog.Trigger>
-  <Dialog.Content class="flex h-full max-h-[80vh] flex-col sm:max-w-4xl" portalProps={{ to: dialogContainer() }}>
+  <Dialog.Content
+    class="flex h-full max-h-[80vh] flex-col sm:max-w-4xl"
+    portalProps={{ to: dialogContainer() }}
+  >
     <Dialog.Header>
       <Dialog.Title>Failing tests as Robot params</Dialog.Title>
       <Dialog.Description>

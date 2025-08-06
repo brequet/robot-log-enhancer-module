@@ -17,19 +17,22 @@
       return;
     }
 
-    navigator.clipboard.writeText(text).then(() => {
-      copied = true;
-      setTimeout(() => {
-        copied = false;
-      }, 2000);
-    }).catch(err => {
-      console.error("Failed to copy text: ", err);
-    });
+    navigator.clipboard
+      .writeText(text)
+      .then(() => {
+        copied = true;
+        setTimeout(() => {
+          copied = false;
+        }, 2000);
+      })
+      .catch((err) => {
+        console.error("Failed to copy text: ", err);
+      });
   }
 </script>
 
 <!-- Handle environments without clipboard API (e.g., SSR, non-secure origins) -->
-{#if typeof navigator !== 'undefined' && navigator.clipboard}
+{#if typeof navigator !== "undefined" && navigator.clipboard}
   <Button
     onclick={copyToClipboard}
     variant="outline"
