@@ -1,11 +1,12 @@
+import { domObserverService } from "$lib/features/dom-observer/dom-observer.service";
+import { scrollY } from "svelte/reactivity/window";
 import {
+  getFailedTestElements,
   getTotalFailedTestCount,
   parseTestFromElement,
   scrollToTest,
 } from "./robot-dom.service";
-import { createFailedTestObserver } from "./robot-observer.service";
 import type { RobotState, RobotTest } from "./robot.types";
-import { scrollY } from "svelte/reactivity/window";
 
 export class RobotStore implements RobotState {
   #failedTestElements: HTMLElement[] = [];
@@ -24,14 +25,8 @@ export class RobotStore implements RobotState {
       this.#failedTests.length !== this.#totalFailedTestCount,
   );
 
-  /**
-   * Initializes the store's DOM-related functionality and reactive effects.
-   * This method should be called from within a component's `onMount` lifecycle hook.
-   * It sets up the observer for failed tests and the effect for scroll tracking.
-   * @returns A cleanup function to be called when the component is destroyed.
-   */
   init = (): (() => void) => {
-    const cleanupEffect = $effect.root(() => {
+    const cleanupScrollEffect = $effect.root(() => {
       $effect(() => {
         const y = scrollY.current;
         if (this.#isLoading || !y) return;
@@ -49,15 +44,15 @@ export class RobotStore implements RobotState {
       });
     });
 
-    const cleanupObserver = createFailedTestObserver((elements) => {
-      this.#failedTestElements = elements;
-      this.#failedTests = elements.map(parseTestFromElement);
+    const cleanupDomObserver = domObserverService.subscribe(() => {
+      this.#failedTestElements = getFailedTestElements();
+      this.#failedTests = this.#failedTestElements.map(parseTestFromElement);
       this.#totalFailedTestCount = getTotalFailedTestCount();
     });
 
     return () => {
-      cleanupObserver();
-      cleanupEffect();
+      cleanupDomObserver();
+      cleanupScrollEffect();
     };
   };
 
@@ -77,7 +72,6 @@ export class RobotStore implements RobotState {
     return this.#isLoading;
   }
 
-  // Public methods to navigate between failed tests.
   goToPreviousTest = (): void => {
     if (this.currentTestIndex > 0) {
       const previousElement =
@@ -94,8 +88,4 @@ export class RobotStore implements RobotState {
   };
 }
 
-/**
- * The singleton instance of the RobotStore.
- * Import this instance to access the robot state from any component.
- */
 export const robotStore = new RobotStore();

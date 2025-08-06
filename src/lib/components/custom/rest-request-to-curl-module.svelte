@@ -2,13 +2,14 @@
 <svelte:options customElement="rest-request-to-curl-module" />
 
 <script lang="ts">
+  import { CodeBlock } from "$lib/components/shared/code-block";
   import * as Dialog from "$lib/components/ui/dialog";
   import { generateCurlCommands } from "$lib/features/curl-generator/curl-generator.service";
+  import { themeStore } from "$lib/features/theme/theme.store.svelte";
   import { injectTailwindStyleForShadowDOM } from "$lib/styles/tailwind-style-injection";
   import { cn } from "$lib/utils";
   import { Terminal } from "lucide-svelte";
   import { buttonVariants } from "../ui/button";
-  import { CodeBlock } from "$lib/components/shared/code-block";
 
   let { requestDataText }: { requestDataText: string } = $props();
 
@@ -21,7 +22,7 @@
   // TODO must split this, make it more modular more clean
 </script>
 
-<div class="mb-4 flex flex-col items-start">
+<div class={cn(themeStore.theme, "mb-4 flex flex-col items-start")}>
   <div bind:this={dialogContainer} class="h-0"></div>
 
   <Dialog.Root>

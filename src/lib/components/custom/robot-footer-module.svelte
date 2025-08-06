@@ -4,21 +4,31 @@
 <script lang="ts">
   import { CONTEXT_KEY_DIALOG_CONTAINER } from "$lib/core/constants";
   import { robotStore } from "$lib/features/robot-log/robot.store.svelte.js";
+  import { themeStore } from "$lib/features/theme/theme.store.svelte";
   import { injectTailwindStyleForShadowDOM } from "$lib/styles/tailwind-style-injection";
   import { onMount, setContext } from "svelte";
   import Footer from "../robot-footer/footer.svelte";
 
-  injectTailwindStyleForShadowDOM($host());
+  const host = $host();
+  injectTailwindStyleForShadowDOM(host);
 
   let dialogContainer: HTMLElement | null = $state(null);
 
   onMount(() => {
-    return robotStore.init();
+    const cleanupRobotStore = robotStore.init();
+    const cleanupThemeStore = themeStore.init();
+
+    return () => {
+      cleanupRobotStore();
+      cleanupThemeStore();
+    };
   });
 
   setContext(CONTEXT_KEY_DIALOG_CONTAINER, () => dialogContainer);
 </script>
 
-<div bind:this={dialogContainer}></div>
+<div class={themeStore.theme}>
+  <div bind:this={dialogContainer}></div>
 
-<Footer />
+  <Footer />
+</div>
