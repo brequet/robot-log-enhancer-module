@@ -6,14 +6,14 @@ import robotExpandRecursivelyScript from "$lib/overrides/robot-expand-recursivel
 import robotPopulateChildrenScript from "$lib/overrides/robot-populate-children?raw";
 
 function initializeRobotFooter(): void {
-  if (document.querySelector("robot-footer")) {
+  if (document.querySelector("robot-footer-module")) {
     return;
   }
 
   const footer = document.createElement("robot-footer-module");
 
   document.body.appendChild(footer);
-  document.body.style.paddingBottom = "90vh";
+  document.body.style.paddingBottom = "70vh";
 }
 
 function injectScript(scriptContent: string): void {

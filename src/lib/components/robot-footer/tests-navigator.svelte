@@ -1,9 +1,7 @@
 <script lang="ts">
   import { Button } from "$lib/components/ui/button";
-  import type { RobotState } from "$lib/core/types";
   import { ArrowLeft, ArrowRight } from "lucide-svelte";
-
-  let { robotStore }: { robotStore: RobotState } = $props();
+  import { robotStore } from "$lib/store/robot.store.svelte";
 
   let isPreviousTestAvailable = $derived(robotStore.currentTestIndex > 0);
   let isNextTestAvailable = $derived(

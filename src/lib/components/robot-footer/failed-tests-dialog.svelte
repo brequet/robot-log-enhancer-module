@@ -4,14 +4,16 @@
   import * as Dialog from "$lib/components/ui/dialog";
   import { formatTestsAsRobotParams } from "$lib/core/services/failed-tests-reporter.service";
   import type { RobotTest } from "$lib/core/types";
+  import { getContext } from "svelte";
+  import { CONTEXT_KEY_DIALOG_CONTAINER } from "$lib/core/contants";
 
   let {
     failedTests,
-    dialogContainer,
   }: {
     failedTests: RobotTest[];
-    dialogContainer: HTMLElement;
   } = $props();
+
+  const dialogContainer: () => HTMLElement = getContext(CONTEXT_KEY_DIALOG_CONTAINER)
 
   let failingTestsAsRobotParams = $derived(
     formatTestsAsRobotParams(failedTests),
@@ -22,7 +24,7 @@
   <Dialog.Trigger class={buttonVariants({ variant: "default" })}>
     Print all failing tests as robot test params in console
   </Dialog.Trigger>
-  <Dialog.Content class="sm:max-w-4xl" portalProps={{ to: dialogContainer }}>
+  <Dialog.Content class="sm:max-w-4xl" portalProps={{ to: dialogContainer() }}>
     <Dialog.Header>
       <Dialog.Title>Failing tests as Robot params</Dialog.Title>
       <Dialog.Description>
