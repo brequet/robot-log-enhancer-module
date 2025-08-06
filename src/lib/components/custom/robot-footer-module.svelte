@@ -2,11 +2,11 @@
 <svelte:options customElement="robot-footer-module" />
 
 <script lang="ts">
+  import { CONTEXT_KEY_DIALOG_CONTAINER } from "$lib/core/constants";
   import { robotStore } from "$lib/features/robot-log/robot.store.svelte.js";
   import { injectTailwindStyleForShadowDOM } from "$lib/styles/tailwind-style-injection";
-  import Footer from "../robot-footer/footer.svelte";
   import { onMount, setContext } from "svelte";
-  import { CONTEXT_KEY_DIALOG_CONTAINER } from "$lib/core/constants";
+  import Footer from "../robot-footer/footer.svelte";
 
   injectTailwindStyleForShadowDOM($host());
 
