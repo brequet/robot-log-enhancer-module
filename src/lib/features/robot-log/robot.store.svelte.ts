@@ -29,7 +29,7 @@ export class RobotStore implements RobotState {
     const cleanupScrollEffect = $effect.root(() => {
       $effect(() => {
         const y = scrollY.current;
-        if (this.#isLoading || !y) return;
+        if (!y) return;
 
         this.#failedTestElements.forEach((el, index) => {
           const { offsetTop, offsetHeight } = el;
