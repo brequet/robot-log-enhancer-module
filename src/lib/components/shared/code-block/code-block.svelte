@@ -12,9 +12,32 @@
   let selectedIndex = $state(0);
   const selectedSnippet = $derived(snippets[selectedIndex]);
 
+  let preElement: HTMLPreElement | null = $state(null);
+
   function selectSnippet(index: number) {
     selectedIndex = index;
   }
+
+  /**
+   * When the user clicks inside the code area, programmatically
+   * select all the text within the <pre> element.
+   * This makes it easy to copy and also fixes the Ctrl+A behavior.
+   */
+function handleCodeClick() {
+  if (!preElement) {
+    return;
+  }
+
+  const selection = window.getSelection();
+  if (!selection) {
+    return;
+  }
+
+  const range = document.createRange();
+  range.selectNodeContents(preElement);
+  selection.removeAllRanges();
+  selection.addRange(range);
+}
 </script>
 
 <div
@@ -42,8 +65,11 @@
   </div>
 
   <!-- Code Area -->
-  <div class="relative flex-1">
+  <!-- svelte-ignore a11y_click_events_have_key_events, a11y_no_static_element_interactions -->
+  <div class="relative flex-1" onclick={handleCodeClick}>
     <pre
-      class="bg-primary text-primary-foreground absolute inset-0 w-full overflow-y-auto whitespace-pre-wrap break-all rounded-b-lg p-4 font-mono">{selectedSnippet.text}</pre>
+      bind:this={preElement}
+      class="bg-primary text-primary-foreground absolute inset-0 w-full cursor-text select-text overflow-auto whitespace-pre-wrap break-all rounded-b-lg p-4 font-mono"
+    >{selectedSnippet.text}</pre>
   </div>
 </div>
